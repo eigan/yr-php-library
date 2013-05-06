@@ -74,6 +74,8 @@ class Yr {
     const XML_DATE_FORMAT = "Y-m-d?H:i:s";
 
     /**
+     * Creates the Yr object with forecasts
+     * 
      * @param array $location 
      * @param array $forecasts_periodic
      * @param  array $forecasts_hourly
@@ -187,8 +189,14 @@ class Yr {
     }
 
     /**
+     * Returns the location name
+     * You can specifiy other output by the $key 
+     * Available keys are:
+     *     name
+     *     type
+     *     country
      * 
-     * @return Location
+     * @return String
      */
     public function getLocation($key = "name")
     {
@@ -196,6 +204,7 @@ class Yr {
     }
 
     /**
+     * List of links to the yr.no frontend
      * 
      * @return array
      */
@@ -205,7 +214,8 @@ class Yr {
     }
 
     /**
-     * Adds a link to the location 
+     * Adds a link 
+     * 
      * @param String $name
      * @param String $url
      */
@@ -234,7 +244,7 @@ class Yr {
     }
 
     /**
-     * There is 4 peridos in a day. Make sure to check the Forecast::getPeriod()
+     * There is 4 peridos in a day. You can check the Forecast::getPeriod()
      * @return array Forecast objects
      */
     public function getPeriodicForecasts()
@@ -244,7 +254,7 @@ class Yr {
     
     /**
      * Returns the time the hourly data was last updated
-     * @return int unixtime
+     * @return \DateTime
      */
     public function getLastUpdated()
     {
@@ -253,7 +263,7 @@ class Yr {
 
     /**
      * Setter for last update
-     * @param int $date Should be int sometime
+     * @param \DateTime $date 
      */
     public function setLastUpdated($date)
     {
@@ -262,7 +272,7 @@ class Yr {
 
     /**
      * Returns the time this will update next time the hourly data will update
-     * @return [type] [description]
+     * @return \DateTime
      */
     public function getNextUpdate()
     {
@@ -271,7 +281,7 @@ class Yr {
 
     /**
      * 
-     * @param [type] $date [description]
+     * @param \DateTime
      */
     public function setNextUpdate($date)
     {
@@ -295,6 +305,8 @@ class Yr {
     }
 
     /**
+     * You have to display this text with a link to the creditUrl! Read rules
+     * @see getCreditUrl()
      * @return String
      */
     public function getCreditText() 

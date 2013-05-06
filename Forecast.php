@@ -2,27 +2,57 @@
 
 namespace eigan\yr;
 
+/**
+ * Representing a forecast for the yr service
+ * Every internal variable is public because setting the variable will faster
+ */
 class Forecast {
 
     /**
-     * @var int
+     * @var \DateTime
      */
     public $from;
 
+    /**
+     * @var \DateTime
+     */    
     public $to;
 
+    /**
+     * Period of the date, will be a number from 0 to 4, where 0 is early in the morning and 4 is at night
+     * @var int
+     */
     public $period;
 
+    /**
+     * Typically the icon to display
+     * @var array
+     */
     public $symbol;
 
+    /**
+     * @var String
+     */
     public $precipitation;
 
+    /**
+     * @var array
+     */
     public $wind_direction;
 
+    /**
+     * @var array
+     */
     public $wind_speed;
 
+    /**
+     * @var array
+     */
     public $temperature;
 
+    /**
+     * @var array
+     */
     public $pressure;
 
     /**
@@ -151,6 +181,7 @@ class Forecast {
     }
 
     /**
+     * Time from when the forecast begins
      * @return DateTime
      */
     public function getFrom()
@@ -167,6 +198,7 @@ class Forecast {
     }
 
     /**
+     * Time for when the forecast ends
      * @return DateTime
      */
     public function getTo()
@@ -192,7 +224,6 @@ class Forecast {
     }
 
     /**
-     * @see  Forecast::getPeriod()
      * @param int $period
      */
     public function setPeriod($period = null)
