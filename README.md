@@ -7,13 +7,13 @@ This is a php library for the norwegian wheather service yr.no. Currently not te
 
 Todo
 ----
-- Support for the other languages (norwegian and nynorsk)
+- ~~Support for the other languages (norwegian and nynorsk)~~
 - More documentation
-- Cache lifetime
+- ~~Cache lifetime~~
 - Find a better name for the yr class
 - Support for observations
 - Support textual forecasts representations
-- Retrieve time for sunrise and sunset
+- ~~Retrieve time for sunrise and sunset~~
 
 Requirements
 ------------
