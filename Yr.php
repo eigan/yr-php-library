@@ -67,6 +67,16 @@ class Yr {
     protected $next_update_date;        
 
     /**
+     * @var \Datetime
+     */
+    protected $sunrise;
+
+    /**
+     * @var \Datetime
+     */
+    protected $sunset;
+
+    /**
      * This is the format used in the xml files. 
      * It is converted to DateTime everywhere 
      * @var string
@@ -173,7 +183,7 @@ class Yr {
         $links = self::xmlToArray($xml_periodic->links);
         $credit = self::xmlToArray($xml_periodic->credit->link);
         $meta = self::xmlToArray($xml_hourly->meta);
-
+        $sun = self::xmlToArray($xml_periodic->sun);
 
         // Set the data on the object
         $yr = new Yr($location, $forecasts_hourly, $forecasts_periodic);
@@ -191,6 +201,12 @@ class Yr {
 
         $yr->setLastUpdated(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $meta['lastupdate']));
         $yr->setNextUpdate(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $meta['nextupdate']));
+
+
+        if(isset($sun['set'], $sun['rise'])) {
+            $yr->setSunset(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $sun['set']));
+            $yr->setSunrise(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $sun['rise']));
+        }
 
         // Finally return the object
         return $yr;
@@ -279,7 +295,39 @@ class Yr {
     {
         return $this->forecasts_periodic;
     }
-    
+
+    /**
+     * @return \Datetime
+     */
+    public function getSunrise()
+    {
+        return $this->sunrise;
+    }
+
+    /**
+     * @param \Datetime
+     */
+    public function setSunrise($time)
+    {
+        $this->sunrise = $time;
+    }
+
+    /**
+     * @return \Datetime
+     */
+    public function getSunset()
+    {
+        return $this->sunset;
+    }
+        
+    /**
+     * @param \Datetime $time
+     */
+    public function setSunset($time)
+    {
+        $this->sunset = $time;
+    }
+
     /**
      * Returns the time the hourly data was last updated
      * @return \DateTime
