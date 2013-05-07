@@ -74,6 +74,11 @@ class Yr {
     const XML_DATE_FORMAT = "Y-m-d?H:i:s";
 
     /**
+     * Yr url
+     */
+    const API_URL = "http://www.yr.no/";
+
+    /**
      * Creates the Yr object with forecasts
      * 
      * @param array $location 
@@ -99,8 +104,11 @@ class Yr {
      * @throws RuntimeException if cache path is not writeable
      * @throws RuntimeException if the location is not correct
      */
-    public static function create($location, $cache_path, $cache_life = 10)
+    public static function create($location, $cache_path, $cache_life = 10, $language = "english")
     {
+        // Get url, different from lang to lang
+        $baseurl = self::getApiUrlByLanguage($language);
+
         // Clean the cache path
         $cache_path = realpath($cache_path) . DIRECTORY_SEPARATOR;
 
@@ -110,14 +118,14 @@ class Yr {
         }
 
         // Cache paths for the location
-        $xml_periodic_path = $cache_path . "phpyrno_" . md5($location) . "_periodic.xml";
-        $xml_hourly_path = $cache_path . "phpyrno_" . md5($location) . "_hourly.xml";
+        $xml_periodic_path = $cache_path . "phpyrno_" . md5($baseurl . $location) . "_periodic.xml";
+        $xml_hourly_path = $cache_path . "phpyrno_" . md5($baseurl . $location) . "_hourly.xml";
 
         // Check if the location is valid by simply first check if cache is there
         // if not, then we would need to lookup later, so we check if we can get a 200 code
         // from the web service
         if(!is_readable($xml_periodic_path) || !is_readable($xml_hourly_path)) {
-            $ch = curl_init("http://www.yr.no/place/$location/forecast_hour_by_hour.xml");
+            $ch = curl_init("$baseurl/$location/forecast_hour_by_hour.xml");
 
             curl_setopt($ch, CURLOPT_NOBODY, true);
             curl_exec($ch);
@@ -125,18 +133,18 @@ class Yr {
             curl_close($ch);
 
             if($retcode != 200) {
-                throw new \RuntimeException("Invalid location! Make sure the format is Country/Fylke/City/City or something. Just check the url on yr.no");
+                throw new \RuntimeException("Invalid location! ($location) Make sure the format is Country/Fylke/City/City or something. Just check the url on yr.no");
             }
         }
 
         // Download the periodic xml if we doesnt have it
-        if(!is_readable($xml_periodic_path) /* || is_exipired */) {
-            file_put_contents($xml_periodic_path, fopen("http://www.yr.no/place/$location/forecast_hour_by_hour.xml", 'r'));
+        if(!is_readable($xml_periodic_path) || (time() - filemtime($xml_periodic_path) > ($cache_life * 60))) {
+            file_put_contents($xml_periodic_path, fopen("$baseurl/$location/forecast_hour_by_hour.xml", 'r'));
         }
 
         // Download the hourly xml if we doesnt have it
-        if(!is_readable($xml_hourly_path) /* || is_exipired */) {
-            file_put_contents($xml_hourly_path, fopen("http://www.yr.no/place/$location/forecast_hour_by_hour.xml", 'r'));
+        if(!is_readable($xml_hourly_path) || (time() - filemtime($xml_hourly_path) > ($cache_life * 60))) {
+            file_put_contents($xml_hourly_path, fopen("$baseurl/$location/forecast_hour_by_hour.xml", 'r'));
         }
 
         $xml_hourly = new \SimpleXMLElement($xml_hourly_path, null, true);
@@ -186,6 +194,26 @@ class Yr {
 
         // Finally return the object
         return $yr;
+    }
+
+    /**
+     * @return String
+     */
+    public static function getApiUrlByLanguage($language) 
+    {
+        switch($language) {
+            case "norwegian":
+                return self::API_URL . "sted/";
+            break;
+
+            case "newnorwegian":
+                return self::API_URL . "sted/";
+            break;
+
+            default:
+                return self::API_URL . "place/";
+            break;
+        }
     }
 
     /**
