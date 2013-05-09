@@ -107,9 +107,18 @@ class Yr {
 
     /**
      * This method builds the Yr object from the freely available Yr api
+     *
+     * Notice that you have to be very specific about the location. Use the same location as you will find 
+     * on the yr.no site. For instance:
+     *
+     * This is the URL for the town Sandefjord:
+     *     http://www.yr.no/place/Norway/Vestfold/Sandefjord/Sandefjord/
+     * Which with this library would be:
+     *     Yr::create("Norway/Vestfold/Sandefjord/Sandefjord")
+     * 
      * 
      * @todo  Check data we are setting on the yr object (meta data, dates, etc)
-     * @param String the location, like Vestfold/Sandefjord
+     * @param String the location, like Norway/Vestfold/Sandefjord
      * @return Yr
      * @throws RuntimeException if cache path is not writeable
      * @throws RuntimeException if the location is not correct
@@ -210,26 +219,6 @@ class Yr {
 
         // Finally return the object
         return $yr;
-    }
-
-    /**
-     * @return String
-     */
-    public static function getApiUrlByLanguage($language) 
-    {
-        switch($language) {
-            case "norwegian":
-                return self::API_URL . "sted/";
-            break;
-
-            case "newnorwegian":
-                return self::API_URL . "sted/";
-            break;
-
-            default:
-                return self::API_URL . "place/";
-            break;
-        }
     }
 
     /**
@@ -355,7 +344,7 @@ class Yr {
     /**
      * @param \Datetime
      */
-    public function setSunrise($time)
+    public function setSunrise(\Datetime $time)
     {
         $this->sunrise = $time;
     }
@@ -371,7 +360,7 @@ class Yr {
     /**
      * @param \Datetime $time
      */
-    public function setSunset($time)
+    public function setSunset(\Datetime $time)
     {
         $this->sunset = $time;
     }
@@ -389,7 +378,7 @@ class Yr {
      * Setter for last update
      * @param \DateTime $date 
      */
-    public function setLastUpdated($date)
+    public function setLastUpdated(\Datetime $date)
     {
         $this->last_update_date = $date;
     }
@@ -407,7 +396,7 @@ class Yr {
      * 
      * @param \DateTime
      */
-    public function setNextUpdate($date)
+    public function setNextUpdate(\Datetime $date)
     {
         $this->next_update_date = $date;
     }
@@ -463,5 +452,28 @@ class Yr {
         }
         
         return $out;
+    }
+
+    /**
+     * @param String $language lowercase language string
+     * @return String
+     */
+    private static function getApiUrlByLanguage($language) 
+    {
+        switch($language) {
+            case "norwegian":
+                return self::API_URL . "sted/";
+            break;
+
+            case "newnorwegian":
+            case "neonorwegian":
+            case "nynorsk":
+                return self::API_URL . "sted/";
+            break;
+
+            default:
+                return self::API_URL . "place/";
+            break;
+        }
     }
 }
