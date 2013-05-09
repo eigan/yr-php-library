@@ -280,20 +280,68 @@ class Yr {
 
     /**
      * Returns the upcoming forecasts as array of Forecast objects
+     *
+     * You can optionally specify $from and $to as unixtime. 
+     * 
+     * @param int $from unixtime for when the first forecast should start
+     * @param int $to unixtime for when the last forecast should start
      * @return array Forecast objects
      */
-    public function getHourlyForecasts()
+    public function getHourlyForecasts($from = null, $to = null)
     {
+        if(!is_null($from) || !is_null($to)) {
+            return $this->getForecastsBetweenTime($this->forecasts_hourly, $from, $to);
+        }
+
         return $this->forecasts_hourly;
     }
 
     /**
      * There is 4 peridos in a day. You can check the Forecast::getPeriod()
+     *
+     * You can optionally specify $from and $to as unixtime. 
+     * 
+     * @param int $from unixtime for when the first forecast should start
+     * @param int $to unixtime for when the last forecast should start
      * @return array Forecast objects
      */
-    public function getPeriodicForecasts()
+    public function getPeriodicForecasts($from = null, $to = null)
     {
+        if(!is_null($from) || !is_null($to)) {
+            return $this->getForecastsBetweenTime($this->forecasts_periodic, $from, $to);
+        }
+
         return $this->forecasts_periodic;
+    }
+
+    /**
+     * Internal function to find forecasts between a given time
+     *
+     * Notice that if $from is null, we change it to now()
+     * and if $to is null, we change it to the time one year from now
+     * 
+     * @param  array $forecasts the list of forecasts to check
+     * @param  int $from    unixtime for when the forecast should start
+     * @param  int $to      unixtime for when the last forecast should start
+     * @return array        list of matching forecasts
+     */
+    protected function getForecastsBetweenTime($forecasts, $from, $to = null)
+    {
+        $result = array();
+
+        // Check for null, or non valid unixtimes
+        $from = is_null($from) || !is_int($to) ? time() : $from;
+        $to = is_null($to) || !is_int($to) ? strtotime("1 year") : $to;
+
+        foreach($forecasts as $forecast) {
+            if($forecast->getFrom()->getTimestamp() >= $from &&
+                $forecast->getFrom()->getTimestamp() <= $to) {
+
+                $result[] = $forecast;
+            }
+        }
+
+        return $result;
     }
 
     /**
