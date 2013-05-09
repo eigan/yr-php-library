@@ -2,8 +2,6 @@
 
 namespace eigan\yr;
 
-require "Forecast.php";
-
 /**
  * 
  * Please read the rules for using the yr api http://om.yr.no/verdata/vilkar/
