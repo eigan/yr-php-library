@@ -124,7 +124,7 @@ class Yr {
 
         // Check if cache path is readable
         if(!is_writable($cache_path)) {
-            throw new RuntimeException("Cache path is not writable");
+            throw new \RuntimeException("Cache path is not writable");
         }
 
         // Cache paths for the location
@@ -149,7 +149,7 @@ class Yr {
 
         // Download the periodic xml if we doesnt have it
         if(!is_readable($xml_periodic_path) || (time() - filemtime($xml_periodic_path) > ($cache_life * 60))) {
-            file_put_contents($xml_periodic_path, fopen("$baseurl/$location/forecast_hour_by_hour.xml", 'r'));
+            file_put_contents($xml_periodic_path, fopen("$baseurl/$location/forecast.xml", 'r'));
         }
 
         // Download the hourly xml if we doesnt have it
@@ -186,7 +186,7 @@ class Yr {
         $sun = self::xmlToArray($xml_periodic->sun);
 
         // Set the data on the object
-        $yr = new Yr($location, $forecasts_hourly, $forecasts_periodic);
+        $yr = new Yr($location, $forecasts_periodic, $forecasts_hourly);
 
         if(isset($links['link'])) {
             foreach($links['link'] as $link) {
