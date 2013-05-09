@@ -264,7 +264,7 @@ class Yr {
      */
     public function getCurrentForecast()
     {
-        return reset($this->forecasts_periodic);
+        return reset($this->forecasts_hourly);
     }
 
     /**
