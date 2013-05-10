@@ -150,7 +150,7 @@ class Yr {
             curl_close($ch);
 
             if($retcode != 200) {
-                throw new \RuntimeException("Invalid location! ($location) Make sure the format is Country/Fylke/City/City or something. Just check the url on yr.no");
+                throw new \RuntimeException("Could not download xml data from weather service. This could mean that the location ($location) is invalid, or you have problem connecting to " . "$baseurl/$location/forecast_hour_by_hour.xml");
             }
         }
 
