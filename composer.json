@@ -1,5 +1,5 @@
 {
-    "name": "eigan/yr",
+    "name": "eigan/yr-php-library",
     "type": "library",
     "description": "Small library for the norwegian weather service yr.no",
     "keywords": ["yr", "weather"],
