@@ -85,7 +85,7 @@ class Forecast {
                   $data['windSpeed'], 
                   $data['temperature'], 
                   $data['pressure'])) {
-            throw new RuntimeException("Missing data for forecast, skipping forecast");
+            throw new RuntimeException("Missing data for forecast");
         }
 
         $forecast->symbol         = $data['symbol'];

@@ -192,31 +192,35 @@ class Yr {
         $meta = self::xmlToArray($xml_hourly->meta);
         $sun = self::xmlToArray($xml_periodic->sun);
 
-        // Set the data on the object
-        $yr = new Yr($location, $forecasts_periodic, $forecasts_hourly);
+        // Set the data on the object        
+        try {
+            $yr = new Yr($location, $forecasts_periodic, $forecasts_hourly);
+            
+            if(isset($links['link'])) {
+                foreach($links['link'] as $link) {
+                    $yr->addLink($link['id'], $link['url']);
+                }  
+            }
 
-        if(isset($links['link'])) {
-            foreach($links['link'] as $link) {
-                $yr->addLink($link['id'], $link['url']);
-            }  
+            if(isset($credit['text'], $credit['url'])) {
+                $yr->setCreditText($credit['text']);
+                $yr->setCreditUrl($credit['url']);
+            }
+
+            $yr->setLastUpdated(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $meta['lastupdate']));
+            $yr->setNextUpdate(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $meta['nextupdate']));
+
+            if(isset($sun['set'], $sun['rise'])) {
+                $yr->setSunset(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $sun['set']));
+                $yr->setSunrise(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $sun['rise']));
+            }
+
+            // Finally return the object
+            return $yr;
+        } catch(\Exception $e) {
+            // We fall back and send exception if something goes wrong
+            throw new \RuntimeException("Could not create Yr object");
         }
-
-        if(isset($credit['text'], $credit['url'])) {
-            $yr->setCreditText($credit['text']);
-            $yr->setCreditUrl($credit['url']);
-        }
-
-        $yr->setLastUpdated(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $meta['lastupdate']));
-        $yr->setNextUpdate(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $meta['nextupdate']));
-
-
-        if(isset($sun['set'], $sun['rise'])) {
-            $yr->setSunset(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $sun['set']));
-            $yr->setSunrise(\DateTime::createFromFormat(self::XML_DATE_FORMAT, $sun['rise']));
-        }
-
-        // Finally return the object
-        return $yr;
     }
 
     /**
