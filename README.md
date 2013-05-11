@@ -25,7 +25,7 @@ Examples
 
 ### Current forecast
 ```php
-$yr = eigan\yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp");
+$yr = Yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp");
 
 $forecast = $yr->getCurrentForecast();
 echo sprintf("Time: %s to %s\n", $forecast->getFrom()->format("H:i"), $forecast->getTo()->format("H:i"));
@@ -34,7 +34,7 @@ echo sprintf("Wind: %smps %s\n", $forecast->getWindSpeed(), $forecast->getWindDi
 ```
 ### Forecasts tomorrow
 ```php
-$yr = eigan\yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp");
+$yr = Yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp");
 
 foreach($yr->getPeriodicForecasts(strtotime("tomorrow"), strtotime("midnight second day") - 1) as $forecast) {
     echo sprintf("Time: %s, %s degrees\n", $forecast->getFrom()->format("H:i"), $forecast->getTemperature());
@@ -43,7 +43,7 @@ foreach($yr->getPeriodicForecasts(strtotime("tomorrow"), strtotime("midnight sec
 
 ### Hourly forecasts rest of the day
 ```php
-$yr = eigan\yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp");
+$yr = Yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp");
 
 foreach($yr->getHourlyForecasts(strtotime("now"), strtotime("tomorrow") - 1) as $forecast) {
     echo sprintf("Time: %s, %s degrees\n", $forecast->getFrom()->format("H:i"), $forecast->getTemperature());
