@@ -1,5 +1,5 @@
 {
-    "name": "eigan/Yr",
+    "name": "eigan/yr",
     "type": "library",
     "description": "Small library for the norwegian weather service yr.no",
     "keywords": ["yr", "weather"],
@@ -20,7 +20,7 @@
             "Yr" : "."
         }
     },
-    
+
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
