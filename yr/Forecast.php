@@ -1,6 +1,6 @@
 <?php
 
-namespace eigan\yr;
+namespace Yr;
 
 /**
  * Representing a forecast for the yr service

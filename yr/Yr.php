@@ -1,6 +1,6 @@
 <?php
 
-namespace eigan\yr;
+namespace Yr;
 
 /**
  * 
@@ -534,7 +534,7 @@ class Yr {
             }
 
             // Response is OK, but we are not returning XML
-            // Mose likely malformatted url, like: 
+            // Most likely malformatted url, like: Norway/Akershus/Nes
             if(($retcode == 200 && $type != "text/xml; charset=utf-8")
                 || $retcode == 404) {
                 return self::SERVICE_LOCATION_INVALID;

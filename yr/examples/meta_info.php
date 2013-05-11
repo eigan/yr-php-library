@@ -3,7 +3,7 @@
 include "../Yr.php";
 include "../Forecast.php";
 
-$yr = eigan\yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp/");
+$yr = Yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp/");
 
 echo "Location: " . $yr->getLocation() . "\n";
 echo "Last update: " . $yr->getLastUpdated()->format("d.m.y H:i") . "\n";
