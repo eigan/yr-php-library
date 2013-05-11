@@ -86,6 +86,12 @@ class Yr {
      */
     const API_URL = "http://www.yr.no/";
 
+    const SERVICE_OK = 1;
+
+    const SERVICE_LOCATION_INVALID = 5;
+
+    const SERVICE_UNKNOWN_STATE = 10;
+
     /**
      * Creates the Yr object with forecasts
      * 
@@ -138,19 +144,16 @@ class Yr {
         $xml_periodic_path = $cache_path . "phpyrno_" . md5($baseurl . $location) . "_periodic.xml";
         $xml_hourly_path = $cache_path . "phpyrno_" . md5($baseurl . $location) . "_hourly.xml";
 
-        // Check if the location is valid by simply first check if cache is there
-        // if not, then we would need to lookup later, so we check if we can get a 200 code
-        // from the web service
+        // Check response from web service
+        // This is a critical process if we have no cache. Please see Yr::getUrlResponseCode() for explanation
         if(!is_readable($xml_periodic_path) || !is_readable($xml_hourly_path)) {
-            $ch = curl_init("$baseurl/$location/forecast_hour_by_hour.xml");
-
-            curl_setopt($ch, CURLOPT_NOBODY, true);
-            curl_exec($ch);
-            $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
-
-            if($retcode != 200) {
-                throw new \RuntimeException("Could not download xml data from weather service. This could mean that the location ($location) is invalid, or you have problem connecting to " . "$baseurl/$location/forecast_hour_by_hour.xml");
+            $test = self::getServiceResponseCode($baseurl . $location);
+            
+            if($test == self::SERVICE_LOCATION_INVALID) {
+                throw new \RuntimeException("The location ($location) is wrong. Please check Yr::create() documentation.", 1);
+                
+            } elseif($test == self::SERVICE_UNKNOWN_STATE) {
+                throw new \RuntimeException("Could not connect to yr service. Tried the url for 7 times, but did not work. Might be do to invalid location, or yr service is down.");
             }
         }
 
@@ -477,5 +480,72 @@ class Yr {
                 return self::API_URL . "place/";
             break;
         }
+    }
+
+    /**
+     * Checks the response from yr service
+     * @see getUrlResponseCode()
+     * @param  array  $url the urls
+     * @return int the response
+     */
+    private static function getServiceResponseCode($url)
+    {
+        // Check first url
+        $url1 = self::getUrlResponseCode($url . "/forecast_hour_by_hour.xml");
+        
+        // If the url is ok, test the other one
+        if($url1 == self::SERVICE_OK) {
+            $url2 = self::getUrlResponseCode($url . "/forecast.xml");
+
+            // Since url1 is ok, return code for url2
+            return $url2;
+        }
+
+        return $url1;
+    }
+
+    /**
+     * There has been found a bug in the yr service that will deny access to the xml files.
+     * This method tries to work out this issue
+     *
+     * The problem is that if you try a city that has not been visited for a while, you will 
+     * get HTTP response 500 from yr. This will go away after 5-10 requests to yr. So we 
+     * will need to send at least 5 requests if we get HTTP 500.
+     * 
+     * Thanks to https://github.com/prebenlm for finding the bug
+     * 
+     * @param  String $url full url to the endpoint
+     * @return int  Status code
+     */
+    private static function getUrlResponseCode($url)
+    {
+        for($i = 0; $i < 7; $i++) {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_NOBODY, true);
+            curl_exec($ch);
+            $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+            curl_close($ch);
+
+            // This might happend for 5-10 times
+            // just skipping to next request if this does happen
+            if($retcode == 500) {
+                continue;
+            }
+
+            // Response is OK, but we are not returning XML
+            // Mose likely malformatted url, like: 
+            if(($retcode == 200 && $type != "text/xml; charset=utf-8")
+                || $retcode == 404) {
+                return self::SERVICE_LOCATION_INVALID;
+            }
+
+            // Response is OK, and the format is xml. Lets go with that
+            if($retcode == 200 && $type == "text/xml; charset=utf-8") {
+                return self::SERVICE_OK;
+            }
+        }
+
+        return self::SERVICE_UNKNOWN_STATE;
     }
 }
