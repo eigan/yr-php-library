@@ -54,13 +54,13 @@ class Yr {
 
     /**
      * Time when the web service was last refreshed
-     * @var int
+     * @var \DateTime
      */
     protected $last_update_date;
 
     /**
      * Time when the web service will update next
-     * @var int
+     * @var \DateTime
      */
     protected $next_update_date;        
 
@@ -86,10 +86,19 @@ class Yr {
      */
     const API_URL = "http://www.yr.no/";
 
+    /**
+     * HTTP 200 response with text/xml
+     */
     const SERVICE_OK = 1;
 
+    /**
+     * HTTP 200 with text/html, or HTTP 404
+     */
     const SERVICE_LOCATION_INVALID = 5;
 
+    /**
+     * HTTP 500, or no response
+     */
     const SERVICE_UNKNOWN_STATE = 10;
 
     /**

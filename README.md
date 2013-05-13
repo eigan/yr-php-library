@@ -49,3 +49,7 @@ foreach($yr->getHourlyForecasts(strtotime("now"), strtotime("tomorrow") - 1) as 
     echo sprintf("Time: %s, %s degrees\n", $forecast->getFrom()->format("H:i"), $forecast->getTemperature());
 }
 ```
+
+License
+----------
+MIT http://www.tldrlegal.com/license/mit-license
