@@ -4,16 +4,18 @@ namespace Yr;
 
 /**
  * Representing a forecast for the yr service
- * Every internal variable is public because setting the variable will faster
+ * Every internal variable is public because setting the variable will be faster
  */
 class Forecast {
 
-    /**
+    /*
+     * From datetime
      * @var \DateTime
      */
     public $from;
 
     /**
+     * To datetime
      * @var \DateTime
      */    
     public $to;
@@ -31,6 +33,7 @@ class Forecast {
     public $symbol;
 
     /**
+     * Temperature symbol
      * @var String
      */
     public $precipitation;
