@@ -8,7 +8,7 @@ namespace Yr;
  */
 class Forecast {
 
-    /*
+    /**
      * From datetime
      * @var \DateTime
      */
