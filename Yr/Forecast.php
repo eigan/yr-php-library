@@ -33,6 +33,7 @@ class Forecast {
     public $symbol;
 
     /**
+     * Precipitation in millimeters
      * @var String
      */
     public $precipitation;
