@@ -33,7 +33,6 @@ class Forecast {
     public $symbol;
 
     /**
-     * Temperature symbol
      * @var String
      */
     public $precipitation;
