@@ -107,24 +107,30 @@ class Forecast {
      *     name
      *     var
      *
-     * Default value will send the code
+     * Default value will give "number"
      * Passing null will result in an array, containg both values
      * 
      * @return string|array default is name
      */
-    public function getSymbol($key = "value") 
+    public function getSymbol($key = "name") 
     {
         return isset($this->symbol[$key]) ? $this->symbol[$key] : null;
     }
 
     /**
-     * Have no idea what this is
+     * The symbol can have three attributes with value
+     *     value
+     *     minvalue
+     *     maxvalue
+     *
+     * Default value will give "value"
+     * Passing null will result in an array, containg both values
      * 
      * @return string 
      */
-    public function getPrecipitation()
+    public function getPrecipitation($key = "value")
     {
-        return $this->precipitation;
+        return isset($this->precipitation[$key]) ? $this->precipitation[$key] : null;
     }
 
     /**
