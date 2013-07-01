@@ -3,17 +3,12 @@ Yr.no PHP library
 
 What is this?
 -------------
-This is a php library for the norwegian wheather service yr.no. Currently not tested for production.
+This is a php library for the norwegian wheather service yr.no. Currently in use on a fairly large norwegian site.
 
 Todo
 ----
-- ~~Support for the other languages (norwegian and nynorsk)~~
-- More documentation
-- ~~Cache lifetime~~
-- Find a better name for the yr class
 - Support for observations
 - Support textual forecasts representations
-- ~~Retrieve time for sunrise and sunset~~
 
 Requirements
 ------------

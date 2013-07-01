@@ -163,6 +163,34 @@ class Forecast {
     }
 
     /**
+     * Utility method to get the filename for the arrows (speed and direction)
+     * 
+     * http://fil.nrk.no/yr/grafikk/vindpiler/32/vindpil.{$speed}.{$degree}.png
+     * 
+     * So you can use the icon like so:
+     * http://fil.nrk.no/yr/grafikk/vindpiler/32/vindpil.{$forecast->getWindIconKey()}.png
+     *
+     * @retur string
+     */
+    public function getWindIconKey() {
+        $speed = (round(($this->getWindSpeed("mps")/2.5)) * 2.5) * 10;
+        $speed = str_pad($speed, 4, '0', STR_PAD_LEFT);
+
+        // 2 and down is 0 speed
+        if($this->getWindSpeed() <= 2) {
+            $speed = "0000";
+        }
+
+        $degree = round((($this->getWindDirection("deg")/10) * 2) / 2) * 10;
+        $degree = str_pad($degree, 3, '0', STR_PAD_LEFT);
+
+        // 360 degree is 0
+        if($degree >= 360) $degree = 0;
+
+        return "$speed.$degree";
+    }
+
+    /**
      * The temperatur have two attributes with value
      *     unit
      *     value
