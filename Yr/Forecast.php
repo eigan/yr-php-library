@@ -170,15 +170,17 @@ class Forecast {
      * So you can use the icon like so:
      * http://fil.nrk.no/yr/grafikk/vindpiler/32/vindpil.{$forecast->getWindIconKey()}.png
      *
-     * @retur string
+     * if it returns 0, then it should be "vindstille" (no wind) http://fil.nrk.no/yr/grafikk/vindpiler/32/vindstille.png
+     *
+     * @returm string
      */
     public function getWindIconKey() {
         $speed = (round(($this->getWindSpeed("mps")/2.5)) * 2.5) * 10;
         $speed = str_pad($speed, 4, '0', STR_PAD_LEFT);
 
-        // 2 and down is 0 speed
-        if($this->getWindSpeed() <= 2) {
-            $speed = "0000";
+        // 2 and down is 0 speed - vindstille
+        if($this->getWindSpeed() <= 0.2) {
+            return 0;
         }
 
         $degree = round((($this->getWindDirection("deg")/10) * 2) / 2) * 10;
