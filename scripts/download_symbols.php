@@ -5,16 +5,19 @@
 #
 # This script will download a lot of icons used by the yr service
 # Using the same paths that yr does
-# Sun: http://symbol.yr.no/grafikk/sym/b100/01d.png
-# Wind speed etc: http://symbol.yr.no/grafikk/sym/b100/mf/02n.83.png
+#  Sun: http://symbol.yr.no/grafikk/sym/b100/01d.png
+#  something..: http://symbol.yr.no/grafikk/sym/b100/mf/02n.83.png
+#  Wind: http://fil.nrk.no/yr/grafikk/vindpiler/32/vindpil.0250.010.png
+
+# ^ Where sym/b100/ is the same as $path_root and vindpiler/32/ is the same as $path_wind
 #
 # Methods used to get the icons:
-#  Forecast::getSymbol("var")
-#  Forecast::getWindIconKey()
+#  Forecast::getSymbol("var") (ex "01d.png", "02n.83")
+#  Forecast::getWindIconKey() (ex "0250.010")
 #
 
 $path_root = "symbols";
-$path_general = $path_root . DIRECTORY_SEPARATOR . "general";
+$path_general = $path_root . DIRECTORY_SEPARATOR;
 $path_wind = $path_root . DIRECTORY_SEPARATOR . "wind";
 // Yr prefixes with mf, we also do this in the api (so last path have to be mf)
 $path_something = $path_root . DIRECTORY_SEPARATOR . "mf";
