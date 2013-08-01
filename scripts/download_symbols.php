@@ -1,6 +1,9 @@
 <?php
 
 #!/bin/bash
+#
+# This can and should only be used if you need to serve the images through HTTPS (which yr does not have)
+#
 
 #
 # This script will download a lot of icons used by the yr service
@@ -38,7 +41,7 @@ $images = array("01d", "01n", "02d", "02n", "03d", "03n", "04", "05d", "05n", "0
 
 echo "Starting script. Will download over 1000 icons, please wait..\n";
 
-$max = 1369;
+$max = 3172;
 $counter = 0;
 
 // Downloads wind icons
@@ -46,12 +49,15 @@ $counter = 0;
 exec("cd $path_wind && " . $downloader . "http://fil.nrk.no/yr/grafikk/vindpiler/32/vindstille.png > /dev/null 2>&1 &");
 setProgress(++$counter, "wind");
 
-for($i = 200; $i <= 950; $i += 50) {
-    // Get all angles in this wind pressure
+for($i = 0; $i <= 975; $i += 25) {
+    $num = str_pad($i, 4, "0", STR_PAD_LEFT);
+
     for($angle  = 5; $angle <= 355; $angle  += 5) {
         $angle = str_pad($angle, 3, "0", STR_PAD_LEFT);
-        exec("cd $path_wind && " . $downloader . "http://fil.nrk.no/yr/grafikk/vindpiler/32/vindpil.0$i.$angle.png > /dev/null 2>&1 &");
-        sleep($sleep_time)
+        if(!file_exists($path_wind . "/vindpil.$num.$angle.png")) {
+            exec("cd $path_wind && " . $downloader . "http://fil.nrk.no/yr/grafikk/vindpiler/32/vindpil.$num.$angle.png > /dev/null 2>&1 &");
+        }
+        sleep($sleep_time);
         setProgress(++$counter, "wind");
     }
 }
@@ -61,7 +67,7 @@ for($i = 200; $i <= 950; $i += 50) {
 // Forecast::getSymbol("var")
 foreach($images as $image) {
     exec("cd $path_general && " . $downloader . "http://symbol.yr.no/grafikk/sym/b100/$image.png > /dev/null 2>&1 &");
-    sleep($sleep_time)
+    sleep($sleep_time);
     setProgress(++$counter, "general");
 }
 
@@ -69,12 +75,17 @@ foreach($images as $image) {
 // Forecast::getSymbol("var")
 for($i = 1; $i <= 99; $i++) {
     $num = str_pad($i, 2, "0", STR_PAD_LEFT);
+    exec("cd $path_something && " . $downloader . "http://symbol.yr.no/grafikk/sym/b100/mf/03n.$num.png > /dev/null 2>&1 &");
+    sleep($sleep_time);
+    setProgress(++$counter, "something");
+
+    $num = str_pad($i, 2, "0", STR_PAD_LEFT);
     exec("cd $path_something && " . $downloader . "http://symbol.yr.no/grafikk/sym/b100/mf/02n.$num.png > /dev/null 2>&1 &");
-    sleep($sleep_time)
+    sleep($sleep_time);
     setProgress(++$counter, "something");
 
     exec("cd $path_something && " . $downloader . "http://symbol.yr.no/grafikk/sym/b100/mf/01n.$num.png > /dev/null 2>&1 &");
-    sleep($sleep_time)
+    sleep($sleep_time);
     setProgress(++$counter, "something");
 }
 
@@ -83,5 +94,5 @@ echo "\nDone! Downloaded $counter files\n";
 // A function to update counter
 function setProgress($current, $thing) {
     global $max;
-    echo "\r".chr(27)."[K" . "Progress ($thing) ($current files) " . ((int) (($current / $max) * 100)) . "%";
+    echo "\r".chr(27)."[K" . "Downloading... ($thing) ($current files) " . ((int) (($current / $max) * 100)) . "%";
 }
