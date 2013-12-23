@@ -138,6 +138,14 @@ class Yr {
      */
     public static function create($location, $cache_path, $cache_life = 10, $language = "english")
     {
+        if(!isset($location)) {
+            throw new \InvalidArgumentException("Location need to be set");
+        }
+
+        if(!isset($cache_path)) {
+            throw new \InvalidArgumentException("Cache path need to be set");
+        }
+
         // Get url, different from lang to lang
         $baseurl = self::getApiUrlByLanguage($language);
 
