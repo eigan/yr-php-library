@@ -15,6 +15,7 @@ PHP library for the norwegian wheather service yr.no. Currently in use on a fair
 #### Without composer
 Download [Yr.php](https://raw.github.com/eigan/yr-php-library/master/Yr/Yr.php) and [Example.php](https://raw.github.com/eigan/yr-php-library/master/Yr/Forecast.php). Add them to a place on you server and include them in your script.
 
+Remember to set `date.timezone = "Europe/Oslo"` in php.ini or whatever is your timezone.
 
 ## Examples
 These examples require you to already have Yr.php (and Forecast.php) included in your code.
@@ -48,6 +49,7 @@ foreach($yr->getHourlyForecasts(strtotime("now"), strtotime("tomorrow") - 1/*sec
 }
 ```
 
+See more examples in [examples directory](https://github.com/eigan/yr-php-library/tree/master/examples).
 
 ## Documentation
 ### Yr
