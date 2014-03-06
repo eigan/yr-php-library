@@ -1,7 +1,7 @@
 <?php
 
-include "../Yr.php";
-include "../Forecast.php";
+include __DIR__ . DIRECTORY_SEPARATOR . "../Yr/Yr.php";
+include __DIR__ . DIRECTORY_SEPARATOR . "../Yr/Forecast.php";
 
 $yr = Yr\Yr::create("Norway/Oslo/Oslo/Oslo", "/tmp");
 
