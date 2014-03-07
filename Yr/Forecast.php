@@ -68,9 +68,9 @@ class Forecast {
 
     /**
      * Creates from simplexml object
-     * @param  SimpleXMLElement $xml The xml node element
+     * @param  \SimpleXMLElement $xml The xml node element
      * @return Forecast
-     * @throws RunetimeException If some data is missing for xml
+     * @throws \RuntimeException If some data is missing for xml
      */
     public static function getForecastFromXml(\SimpleXMLElement $xml)
     {
@@ -88,7 +88,7 @@ class Forecast {
                   $data['windSpeed'], 
                   $data['temperature'], 
                   $data['pressure'])) {
-            throw new RuntimeException("Missing data for forecast");
+            throw new \RuntimeException("Missing data for forecast");
         }
 
         $forecast->symbol         = $data['symbol'];
@@ -109,7 +109,8 @@ class Forecast {
      *
      * Default value will give "number"
      * Passing null will result in an array, containg both values
-     * 
+     *
+     * @param String $key number|name|var
      * @return string|array default is name
      */
     public function getSymbol($key = "name") 
@@ -125,7 +126,8 @@ class Forecast {
      *
      * Default value will give "value"
      * Passing null will result in an array, containg both values
-     * 
+     *
+     * @param String $key value|minvalue|maxvalue
      * @return string 
      */
     public function getPrecipitation($key = "value")
@@ -141,7 +143,8 @@ class Forecast {
      *
      * Default value will send the code
      * Passing null will result in an array, containg both values
-     * 
+     *
+     * @param String $key deg|code|name
      * @return string|array default is code
      */
     public function getWindDirection($key = "code")
@@ -155,7 +158,8 @@ class Forecast {
      *     name
      *
      * Passing null will result in an array, containg both values
-     * 
+     *
+     * @param String $key mps|name
      * @return string|array default value is meters pr sec
      */
     public function getWindSpeed($key = "mps") {
@@ -198,7 +202,8 @@ class Forecast {
      *     value
      *
      * Passing null will result in an array, containg both values
-     * 
+     *
+     * @param String $key value|unit
      * @return string|array see documentation
      */
     public function getTemperature($key = "value")
@@ -212,7 +217,8 @@ class Forecast {
      *     value
      *
      * Passing null will result in an array, containg both values
-     * 
+     *
+     * @param String $key value|unit
      * @return string|array see documentation
      */
     public function getPressure($key = "value") {
@@ -221,7 +227,7 @@ class Forecast {
 
     /**
      * Time from when the forecast begins
-     * @return DateTime
+     * @return \DateTime
      */
     public function getFrom()
     {
@@ -229,16 +235,16 @@ class Forecast {
     }
 
     /**
-     * @param DateTime $from
+     * @param \DateTime $from
      */
-    public function setFrom(DateTime $from)
+    public function setFrom(\DateTime $from)
     {
         $this->from = $from;
     }
 
     /**
      * Time for when the forecast ends
-     * @return DateTime
+     * @return \DateTime
      */
     public function getTo()
     {
@@ -246,9 +252,9 @@ class Forecast {
     }
 
     /**
-     * @param DateTime $to
+     * @param \DateTime $to
      */
-    public function setTo(DateTime $to)
+    public function setTo(\DateTime $to)
     {
         $this->to = $to;
     }

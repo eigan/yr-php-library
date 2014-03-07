@@ -16,7 +16,7 @@ class Yr {
      * @var array
      */
     protected $forecasts_hourly;
-    
+
     /**
      * Periodic data
      * @var array
@@ -24,10 +24,12 @@ class Yr {
     protected $forecasts_periodic;
 
     /**
+    /**
      * List of WheaterStation objects
      * @var array
      */
     protected $observations;
+
 
     /**
      * The location where we have weather data
@@ -131,10 +133,14 @@ class Yr {
      * 
      * 
      * @todo  Check data we are setting on the yr object (meta data, dates, etc)
-     * @param String the location, like Norway/Vestfold/Sandefjord
+     * @param String $location    the location, like Norway/Vestfold/Sandefjord
+     * @param String $cache_path  where to store the cache
+     * @param int    $cache_life  life of the cache
+     * @param String $language    language, norwegian or english
      * @return Yr
-     * @throws RuntimeException if cache path is not writeable
-     * @throws RuntimeException if the location is not correct
+     * @throws \RuntimeException if cache path is not writeable
+     * @throws \RuntimeException if the location is not correct
+     * @throws \InvalidArgumentException
      */
     public static function create($location, $cache_path, $cache_life = 10, $language = "english")
     {
@@ -193,7 +199,7 @@ class Yr {
             try {
                 $tmp = Forecast::getForecastFromXml($forecast);
                 $forecasts_hourly[] = $tmp;
-            } catch(RuntimeException $e) {}
+            } catch(\RuntimeException $e) {}
         }
 
         // Get all the periodic forecasts and create Forecast objects
@@ -202,7 +208,7 @@ class Yr {
             try {
                 $tmp = Forecast::getForecastFromXml($forecast);
                 $forecasts_periodic[] = $tmp;
-            } catch(RuntimeException $e) {}
+            } catch(\RuntimeException $e) {}
         }
 
         // Get other data for our object
@@ -250,7 +256,8 @@ class Yr {
      *     name
      *     type
      *     country
-     * 
+     *
+     * @param String $key
      * @return String
      */
     public function getLocation($key = "name")
@@ -331,10 +338,10 @@ class Yr {
      * Notice that if $from is null, we change it to now()
      * and if $to is null, we change it to the time one year from now
      * 
-     * @param  array $forecasts the list of forecasts to check
-     * @param  int $from    unixtime for when the forecast should start
-     * @param  int $to      unixtime for when the last forecast should start
-     * @return array        list of matching forecasts
+     * @param  Forecast[] $forecasts the list of forecasts to check
+     * @param  int        $from      unixtime for when the forecast should start
+     * @param  int        $to        unixtime for when the last forecast should start
+     * @return array            list of matching forecasts
      */
     protected function getForecastsBetweenTime($forecasts, $from, $to = null)
     {
@@ -459,6 +466,8 @@ class Yr {
 
     /**
      * Converts xml to array and hide comments
+     * @param \SimpleXMLElement $data
+     * @param array $out
      * @return array
      */
     public static function xmlToArray($data, $out = array())
