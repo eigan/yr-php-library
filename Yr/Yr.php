@@ -333,6 +333,18 @@ class Yr {
     }
 
     /**
+     * Get a Forecast at a specific time
+     *
+     * @param String $at unixtime for when the forecast should be
+     * @return Forecast[]
+     */
+    public function getForecast($at) {
+        $forecasts = $this->getForecastsBetweenTime($this->forecasts_hourly, $at);
+
+        return reset($forecasts);
+    }
+
+    /**
      * Internal function to find forecasts between a given time
      *
      * Notice that if $from is null, we change it to now()
