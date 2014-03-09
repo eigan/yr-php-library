@@ -20,6 +20,8 @@ Remember to set `date.timezone = "Europe/Oslo"` in php.ini or whatever is your t
 
 ## Changelog
 **09 march 2014**
+- ! Yr::create() now returns a Location object
+- ! removed getLocation, use getName(), getCountry(), getType() instead
 - ! Forecast methods will no longer return the array when specifying null as parameter. Try to use toArray() instead
 - Added autoload.php to make it easier to load classes if/when structure changes.
 - Added Forecast->toArray()
@@ -111,26 +113,41 @@ class Yr {
      * @param String $cache_path  where to store the cache
      * @param int    $cache_life  life of the cache
      * @param String $language    language, norwegian or english
-     * @return Yr
+     * @return Yr\Location
      * @throws \RuntimeException if cache path is not writeable
      * @throws \RuntimeException if the location is not correct
      * @throws \InvalidArgumentException
      */
     public static function create($location, $cache_path, $cache_life = 10, $language = "english");
+}
+```
+### Location
+```php
+class Location {
 
     /**
-     * Returns the location name
-     * You can specifiy other output by the $key 
-     * Available keys are:
-     *     name
-     *     type
-     *     country
-     *
-     * @todo return lat/lang
-     * @param String $key
      * @return String
      */
-    public function getLocation($key = "name");
+    public function getName();
+
+    /**
+     * @return String
+     */
+    public function getType();
+
+    /**
+     * @return String
+     */
+    public function getCountry();
+    /**
+     * @return String
+     */
+    public function getTimezone();
+
+    /**
+     * @return array
+     */
+    public function getLatLong();
 
     /**
      * List of links to the yr.no frontend
@@ -176,6 +193,7 @@ class Yr {
      */
     public function getForecast($at);
 
+
     /**
      * @return WeatherStation[]
      */
@@ -190,7 +208,6 @@ class Yr {
      * @return \Datetime
      */
     public function getSunset();
-
     /**
      * Returns the time the hourly data was last updated
      * @return \DateTime
@@ -202,23 +219,26 @@ class Yr {
      * @return \DateTime
      */
     public function getNextUpdate();
-
     /**
      * @return String 
      */
     public function getCreditUrl();
-
 
     /**
      * You have to display this text with a link to the creditUrl! Read rules
      * @see getCreditUrl()
      * @return String
      */
-    public function getCreditText();
+    public function getCreditText() 
+    {
+        return $this->credit_text;
+    }
 
+    /**
+     * @return array 
+     */
     public function toArray();
 }
-```
 
 ### Forecast
 ```php

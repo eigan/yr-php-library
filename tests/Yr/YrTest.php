@@ -8,7 +8,7 @@ class YrTest extends PHPUnit_Framework_TestCase {
     public function testCreate() {
         $yr = Yr\Yr::create("Norway/Oslo/Oslo/Oslo", "/tmp", 10, "english");
 
-        $this->assertInstanceOf("Yr\Yr", $yr);
+        $this->assertInstanceOf("Yr\Location", $yr);
     }
 
     public function testCreateFresh() {
@@ -16,17 +16,17 @@ class YrTest extends PHPUnit_Framework_TestCase {
         mkdir($cache_dir);
 
         $yr = Yr\Yr::create("Norway/Oslo/Oslo/Oslo", $cache_dir, 10, "english");
-        $this->assertInstanceOf("Yr\Yr", $yr); 
+        $this->assertInstanceOf("Yr\Location", $yr); 
     }
 
     public function testCreateNorwegian() {
         $yr = Yr\Yr::create("Norway/Oslo/Oslo/Oslo", "/tmp", 10, "norwegian");
-        $this->assertInstanceOf("Yr\Yr", $yr);
+        $this->assertInstanceOf("Yr\Location", $yr);
     }
 
     public function testCreateNewNorwegian() {
         $yr = Yr\Yr::create("Norway/Oslo/Oslo/Oslo", "/tmp", 10, "newnorwegian");
-        $this->assertInstanceOf("Yr\Yr", $yr);
+        $this->assertInstanceOf("Yr\Location", $yr);
     }
 
     /**
@@ -62,86 +62,5 @@ class YrTest extends PHPUnit_Framework_TestCase {
      */
     public function testCreateInvalidCachePath() {
         Yr\Yr::create("Norway/Oslo/Oslo/Oslo", "", 10, null);
-    }
-
-    public function testGetHourlyForecasts() {
-        $forecasts = $this->yr->getHourlyForecasts();
-        $this->assertTrue(is_array($forecasts) && count($forecasts) > 0);
-
-        $forecasts = $this->yr->getHourlyForecasts(strtotime("now"), strtotime("tomorrow"));
-        $this->assertTrue(is_array($forecasts) && count($forecasts) > 0);
-    }
-
-    public function testGetPeriodicForecasts() {
-        $forecasts = $this->yr->getPeriodicForecasts();
-        $this->assertTrue(is_array($forecasts) && count($forecasts) > 0);
-
-        $forecast = reset($forecasts);
-        $this->assertInstanceOf("Yr\Forecast", $forecast);
-
-        $forecasts = $this->yr->getPeriodicForecasts(strtotime("now"), strtotime("tomorrow"));
-        $this->assertTrue(is_array($forecasts) && count($forecasts) > 0);
-
-        $forecast = reset($forecasts);
-        $this->assertInstanceOf("Yr\Forecast", $forecast);
-    }
-
-    public function testGetForecast() {
-        $this->assertInstanceOf("Yr\Forecast", $this->yr->getForecast(strtotime("now")));
-    }
-
-    public function testGetWeatherStations() {
-        $stations = $this->yr->getWeatherStations();
-        $this->assertTrue(is_array($stations) && count($stations) > 0);
-
-        $station = reset($stations);
-        $this->assertInstanceOf("Yr\WeatherStation", $station);
-    }
-
-    public function testGetLocation() {
-        $location = $this->yr->getLocation("type");
-        $this->assertTrue(is_string($location) && !empty($location));
-
-        $location = $this->yr->getLocation();
-        $this->assertTrue($location === "Oslo");
-        $country = $this->yr->getLocation("country");
-        $this->assertTrue($country === "Norway");
-    }
-
-    public function testGetCredit() {
-        $credit_text = $this->yr->getCreditText();
-        $this->assertTrue(is_string($credit_text) && !empty($credit_text));
-        $credit_url = $this->yr->getCreditUrl();
-        $this->assertTrue(is_string($credit_url) && !empty($credit_url));
-    }
-
-    public function testGetLinks() {
-        $this->assertTrue(is_array($this->yr->getLinks()));
-    }
-
-    public function testGetCurrentForecast() {
-        $this->assertInstanceOf("Yr\Forecast", $this->yr->getCurrentForecast());
-    }
-
-    public function testGetSunrise() {
-        $this->assertInstanceOf("\Datetime", $this->yr->getSunrise());
-    }
-
-    public function testGetSunset() {
-        $this->assertInstanceOf("\Datetime", $this->yr->getSunset());
-    }
-
-    public function testGetNextUpdate() {
-        $this->assertInstanceOf("\Datetime", $this->yr->getNextUpdate());
-    }
-
-    public function testGetLastUpdated() {
-        $this->assertInstanceOf("\Datetime", $this->yr->getLastUpdated());   
-    }
-
-    public function testToArray() {
-        $array = $this->yr->toArray();
-
-        $this->assertTrue(is_array($array));
     }
 }

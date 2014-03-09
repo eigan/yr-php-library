@@ -33,12 +33,14 @@ Time: 19:00, 6 degrees
 ```php
 $yr = Yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp/");
 
-echo "Location: " . $yr->getLocation() . "\n";
+echo "Location: " . $yr->getName() . "\n";
+echo "Country: " . $yr->getCountry() . "\n";
 echo "Last update: " . $yr->getLastUpdated()->format("d.m.y H:i") . "\n";
 echo "Next update: " . $yr->getNextUpdate()->format("d.m.y H:i") . "\n";
 ```
 ```
 Location: Sandefjord
+Country: Norway
 Last update: 09.03.14 10:38
 Next update: 09.03.14 17:00
 ```

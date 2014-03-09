@@ -17,7 +17,7 @@ class WeatherStationTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(is_numeric($distance) && !empty($distance), "getDistance() is empty or not numeric");
     }
 
-    public function testLatLong() {
+    public function testgetLatLong() {
         $latLong = $this->station->getLatLong();
 
         $this->assertTrue(is_array($latLong));
