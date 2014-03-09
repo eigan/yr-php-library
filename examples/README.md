@@ -45,8 +45,8 @@ Last update: 09.03.14 10:38
 Next update: 09.03.14 17:00
 ```
 
-#### Textual
-```
+#### Textual forecasts
+```php
 $yr = Yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp/");
 
 foreach($yr->getTextualForecasts() as $forecast) {
