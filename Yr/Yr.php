@@ -613,6 +613,9 @@ class Yr {
         return self::SERVICE_UNKNOWN_STATE;
     }
 
+    /**
+     * @return array 
+     */
     public function toArray() {
         return array(
             'location'    => $this->location,

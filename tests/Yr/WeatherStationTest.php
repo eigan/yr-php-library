@@ -38,6 +38,13 @@ class WeatherStationTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf("Yr\Forecast", $forecast);
     }
 
+    public function testSetForecast() {
+        $forecast = new Yr\Forecast();
+        $this->station->setForecast($forecast);
+
+        $this->assertEquals($forecast, $this->station->getForecast());
+    }
+
     public function testToArray() {
         $array = $this->station->toArray();
 
