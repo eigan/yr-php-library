@@ -143,11 +143,10 @@ class Forecast {
     /**
      * The wind direction have three attributes with value
      *     deg
-     *     code
+     *     code [default]
      *     name
      *
      * Default value will send the code
-     * Passing null will result in an array, containg both values
      *
      * @param String $key deg|code|name
      * @return string|array default is code
@@ -159,10 +158,8 @@ class Forecast {
 
     /**
      * The wind speed have two attributes with value
-     *     mps
+     *     mps [default]
      *     name
-     *
-     * Passing null will result in an array, containg both values
      *
      * @param String $key mps|name
      * @return string|array default value is meters pr sec
