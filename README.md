@@ -24,6 +24,7 @@ Remember to set `date.timezone = "Europe/Oslo"` in php.ini or whatever is your t
 - Added Forecast->toArray()
 - Added Yr->toArray()
 - Added WeatherStations (observations)
+- Added TextualForecasts
 - Added Yr->getForecast($at), get a forecast at a specific unixtime
 - Added tests. 98.15% code coverage (coverage cant hit when yr return HTTP 500)
 - More exceptions and error checks in all classes
@@ -88,7 +89,6 @@ See more examples in [examples directory](https://github.com/eigan/yr-php-librar
  * Please read the rules for using the yr api http://om.yr.no/verdata/vilkar/
  * This class will implement caching for you
  *
- * @package Yr
  * @see http://om.yr.no/verdata/free-weather-data/
  */
 class Yr {
@@ -243,7 +243,6 @@ class Location {
  * Representing a forecast for the yr service
  * Please do not use the public vars directly
  *
- * @package Yr
  */
 class Forecast {
 
@@ -358,6 +357,35 @@ class Forecast {
 }
 ```
 
+### TextualForecast
+```php
+/**
+ * Textual forecasts for a given day (or two days)
+ * Note: There is some html inside the getText()...
+ *
+ */
+class TextualForecast {
+
+    /**
+     * @return String
+     */
+    public function getTitle();
+
+    /**
+     * @return String
+     */
+    public function getText();
+
+    /**
+     * @return \Datetime
+     */
+    public function getFrom();
+    /**
+     * @return \DateTime
+     */
+    public function getTo();
+}
+```
 
 ### WeatherStation
 ```php
@@ -365,8 +393,6 @@ class Forecast {
  * Weather Station
  * Note that the Forecast object will not be complete since all data from it might not be set :/
  *
- * @package Yr
- * @author Einar Gangsø <einargangso@gmail.com>
  */
 class WeatherStation {
 
