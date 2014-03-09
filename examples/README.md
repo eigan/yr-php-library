@@ -45,6 +45,25 @@ Last update: 09.03.14 10:38
 Next update: 09.03.14 17:00
 ```
 
+#### Textual
+```
+$yr = Yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp/");
+
+foreach($yr->getTextualForecasts() as $forecast) {
+    print $forecast->getTitle() . "\n";
+    print $forecast->getText() . "\n\n";
+}
+```
+```
+Sunday and Monday
+<strong>Østlandet og Telemark:</strong> Sørvestlig frisk bris utsatte steder, periodevis sørvestlig liten kuling på kysten. Oppholdsvær og varierende skydekke. Lokal tåke. <strong>Svenskegrensa - Stavern:</strong> Sørvestlig frisk bris 10, periodevis liten kuling 12. Skiftende skydekke, opphold. Lokal tåke. Mandag morgen forbigående litt regn. Fra mandag formiddag vestlig bris. For det meste pent vær.
+
+Monday
+<strong>Østlandet:</strong> Sørvestlig bris. Skyet og lokal tåke. Forbigående litt regn sør for Oslo tidlig på dagen. I løpet av formiddagen vestlig bris og for det meste pent vær, først i vest.
+
+[...]
+```
+
 #### Weather Stations
 ```php
 $yr = Yr\Yr::create("Norway/Oslo/Oslo/Oslo", "/tmp", 10, null);

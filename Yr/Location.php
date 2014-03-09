@@ -5,15 +5,20 @@ namespace Yr;
 class Location {
 
     /**
-     * @var array
+     * @var Forecast[]
      */
     protected $forecasts_hourly;
 
     /**
      * Periodic data
-     * @var array
+     * @var Forecast[]
      */
     protected $forecasts_periodic;
+
+    /**
+     * @var TextualForecast[]
+     */
+    protected $textual_forecasts;
 
     /**
      * List of WheaterStation objects
@@ -228,6 +233,20 @@ class Location {
         }
 
         return $result;
+    }
+
+    /**
+     * @return TextualForecast[]
+     */
+    public function getTextualForecasts() {
+        return $this->textual_forecasts;
+    }
+
+    /**
+     * @param TextualForecast[] $forecasts
+     */
+    public function setTextualForecasts(array $forecasts) {
+        $this->textual_forecasts = $forecasts;
     }
 
     /**

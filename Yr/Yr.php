@@ -135,6 +135,13 @@ class Yr {
             } catch(\RuntimeException $e) {}
         }
 
+        $textual_forecasts = array();
+        foreach($xml_hourly->forecast->text->location->time as $forecast) {
+            try {
+                $textual_forecasts[] = TextualForecast::createTextualForecastFromXml($forecast);
+            } catch(\Exception $e) {}
+        }
+
         // weather_stations
         $weather_stations = array();
         foreach($xml_hourly->observations->weatherstation as $observation) {
@@ -157,7 +164,8 @@ class Yr {
             $yr = new Location($location, $forecasts_periodic, $forecasts_hourly);
 
             $yr->setWeatherStations($weather_stations);
-
+            $yr->setTextualForecasts($textual_forecasts);
+            
             if(isset($links['link'])) {
                 foreach($links['link'] as $link) {
                     $yr->addLink($link['id'], $link['url']);
