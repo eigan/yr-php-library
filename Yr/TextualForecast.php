@@ -5,6 +5,7 @@ namespace Yr;
 /**
  * Textual forecasts for a given day (or two days)
  * Note: There is some html inside the getText()...
+ * Note: These are always norwegian
  *
  * @package Yr
  * @author Einar Gangsø <einargangso@gmail.com>

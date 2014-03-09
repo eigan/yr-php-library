@@ -26,8 +26,8 @@ class LocationTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf("Yr\Forecast", $forecast);
     }
 
-    public function testGetForecast() {
-        $this->assertInstanceOf("Yr\Forecast", $this->location->getForecast(strtotime("now")));
+    public function testGetForecastAt() {
+        $this->assertInstanceOf("Yr\Forecast", $this->location->getForecastAt(strtotime("now")));
     }
 
     public function testGetWeatherStations() {

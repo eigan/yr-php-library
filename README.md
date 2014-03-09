@@ -22,10 +22,10 @@ Remember to set `date.timezone = "Europe/Oslo"` in php.ini or whatever is your t
 - ! Forecast methods will no longer return the array when specifying null as parameter. Try to use toArray() instead
 - Added autoload.php to make it easier to load classes if/when structure changes.
 - Added Forecast->toArray()
-- Added Yr->toArray()
+- Added Location->toArray()
 - Added WeatherStations (observations)
 - Added TextualForecasts
-- Added Yr->getForecast($at), get a forecast at a specific unixtime
+- Added Location->getForecastAt($time), get a forecast at a specific unixtime
 - Added tests. 98.15% code coverage (coverage cant hit when yr return HTTP 500)
 - More exceptions and error checks in all classes
 - phpdoc cleanup
@@ -185,10 +185,10 @@ class Location {
     /**
      * Get a Forecast at a specific time
      *
-     * @param String $at unixtime for when the forecast should be
+     * @param String $time unixtime for when the forecast should be
      * @return Forecast[]
      */
-    public function getForecast($at);
+    public function getForecastAt($time);
 
 
     /**

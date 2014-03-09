@@ -196,11 +196,11 @@ class Location {
     /**
      * Get a Forecast at a specific time
      *
-     * @param String $at unixtime for when the forecast should be
+     * @param String $time unixtime for when the forecast should be
      * @return Forecast[]
      */
-    public function getForecast($at) {
-        $forecasts = $this->getForecastsBetweenTime($this->forecasts_hourly, $at);
+    public function getForecastAt($time) {
+        $forecasts = $this->getForecastsBetweenTime($this->forecasts_hourly, $time);
 
         return reset($forecasts);
     }
@@ -236,6 +236,7 @@ class Location {
     }
 
     /**
+     * Note: Th textual forecasts is always norwegian..
      * @return TextualForecast[]
      */
     public function getTextualForecasts() {
