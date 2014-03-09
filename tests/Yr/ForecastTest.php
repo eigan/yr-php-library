@@ -41,10 +41,14 @@ class ForecastTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testGetSymbol() {
-        $this->assertTrue(is_string($this->forecast->getSymbol()) && !empty($this->forecast->getSymbol()));
-        $this->assertTrue(is_string($this->forecast->getSymbol("number")) && !empty($this->forecast->getSymbol("number")));
-        $this->assertTrue(is_string($this->forecast->getSymbol("name")) && !empty($this->forecast->getSymbol("name")));
-        $this->assertTrue(is_string($this->forecast->getSymbol("var")) && !empty($this->forecast->getSymbol("var")));
+        $symbol = $this->forecast->getSymbol();
+        $this->assertTrue(is_string($symbol) && !empty($symbol));
+        $symbol = $this->forecast->getSymbol("number");
+        $this->assertTrue(is_string($symbol) && !empty($symbol));
+        $symbol = $this->forecast->getSymbol("name");
+        $this->assertTrue(is_string($symbol) && !empty($symbol));
+        $symbol = $this->forecast->getSymbol("var");
+        $this->assertTrue(is_string($symbol) && !empty($symbol));
     }
 
     public function testGetPrecipitation() {
@@ -55,38 +59,44 @@ class ForecastTest extends PHPUnit_Framework_TestCase {
     public function testSetPrecipitation() {
         $testArray = array("value" => "1", 'minvalue' => 1, 'maxvalue' => 1);
         $this->forecast->setPrecipitation($testArray);
-
-        $gotArray = $this->forecast->getPrecipitation();
-
+        
         $this->assertEquals($this->forecast->getPrecipitation("value"), $testArray['value']);
         $this->assertEquals($this->forecast->getPrecipitation("minvalue"), $testArray['minvalue']);
         $this->assertEquals($this->forecast->getPrecipitation("maxvalue"), $testArray['maxvalue']);
     }
 
     public function testGetWindDirection() {
-        $this->assertTrue(is_string($this->forecast->getWindDirection()) && !empty($this->forecast->getWindDirection()));
-        $this->assertTrue(is_string($this->forecast->getWindDirection("deg")) && !empty($this->forecast->getWindDirection("deg")));
-        $this->assertTrue(is_string($this->forecast->getWindDirection("code")) && !empty($this->forecast->getWindDirection("code")));
-        $this->assertTrue(is_string($this->forecast->getWindDirection("name")) && !empty($this->forecast->getWindDirection("name")));
+        $wind_direction = $this->forecast->getWindDirection();
+        $this->assertTrue(is_string($wind_direction) && !empty($wind_direction));
+        $wind_direction = $this->forecast->getWindDirection("deg");
+        $this->assertTrue(is_string($wind_direction) && !empty($wind_direction));
+        $wind_direction = $this->forecast->getWindDirection("code");
+        $this->assertTrue(is_string($wind_direction) && !empty($wind_direction));
+        $wind_direction = $this->forecast->getWindDirection("name");
+        $this->assertTrue(is_string($wind_direction) && !empty($wind_direction));
     }
 
     public function testGetTemperature() {
-        $this->assertTrue(is_string($this->forecast->getTemperature()) && !empty($this->forecast->getTemperature()));
-        $this->assertTrue(is_string($this->forecast->getTemperature("unit")) && !empty($this->forecast->getTemperature("unit")));
-        $this->assertTrue(is_string($this->forecast->getTemperature("value")) && !empty($this->forecast->getTemperature("value")));
+        $temperature = $this->forecast->getTemperature();
+        $this->assertTrue(is_string($temperature) && !empty($temperature));
+        $temperature = $this->forecast->getTemperature("unit");
+        $this->assertTrue(is_string($temperature) && !empty($temperature));
+        $temperature = $this->forecast->getTemperature("value");
+        $this->assertTrue(is_string($temperature) && !empty($temperature));
     }
 
     public function testGetPressure() {
-        $this->assertTrue(is_string($this->forecast->getPressure()) && !empty($this->forecast->getPressure()));
-        $this->assertTrue(is_string($this->forecast->getPressure("unit")) && !empty($this->forecast->getPressure("unit")));
-        $this->assertTrue(is_string($this->forecast->getPressure("value")) && !empty($this->forecast->getPressure("value")));
+        $pressure = $this->forecast->getPressure();
+        $this->assertTrue(is_string($pressure) && !empty($pressure));
+        $pressure = $this->forecast->getPressure("unit");
+        $this->assertTrue(is_string($pressure) && !empty($pressure));
+        $pressure = $this->forecast->getPressure("value");
+        $this->assertTrue(is_string($pressure) && !empty($pressure));
     }
 
     public function testSetPressure() {
         $testArray = array("unit" => "m", 'value' => 1);
         $this->forecast->setPressure($testArray);
-
-        $gotArray = $this->forecast->getPressure();
 
         $this->assertEquals($this->forecast->getPressure("unit"),$testArray['unit']);
         $this->assertEquals($this->forecast->getPressure("value"),$testArray['value']);
@@ -104,7 +114,8 @@ class ForecastTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testGetPeriod() {
-        $this->assertTrue(is_numeric($this->forecast->getPeriod()) || is_null($this->forecast->getPeriod()));
+        $period = $this->forecast->getPeriod();
+        $this->assertTrue(is_numeric($period) || is_null($period));
     }
 
     public function testSetPeriod() {

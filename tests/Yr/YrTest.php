@@ -106,8 +106,10 @@ class YrTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testGetCredit() {
-        $this->assertTrue(is_string($this->yr->getCreditText()) && !empty($this->yr->getCreditText()));
-        $this->assertTrue(is_string($this->yr->getCreditUrl()) && !empty($this->yr->getCreditUrl()));
+        $credit_text = $this->yr->getCreditText();
+        $this->assertTrue(is_string($credit_text) && !empty($credit_text));
+        $credit_url = $this->yr->getCreditUrl();
+        $this->assertTrue(is_string($credit_url) && !empty($credit_url));
     }
 
     public function testGetLinks() {
@@ -138,13 +140,5 @@ class YrTest extends PHPUnit_Framework_TestCase {
         $array = $this->yr->toArray();
 
         $this->assertTrue(is_array($array));
-    }
-
-
-    /**
-     * Return the test-xml
-     */
-    protected function getXml() {
-
     }
 }

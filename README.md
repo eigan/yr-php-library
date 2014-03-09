@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/eigan/yr-php-library.png?branch=master)](https://travis-ci.org/eigan/yr-php-library)
+
 Yr.no PHP library
 ==================
 PHP library for the norwegian wheather service yr.no. Currently in use on a fairly large norwegian site.
