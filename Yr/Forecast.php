@@ -125,6 +125,14 @@ class Forecast {
     }
 
     /**
+     * @param array $symbol
+     */
+    public function setSymbol($symbol)
+    {
+        $this->symbol = $symbol;
+    }
+
+    /**
      * The symbol can have three attributes with value
      *     value [default]
      *     minvalue
@@ -141,6 +149,14 @@ class Forecast {
     }
 
     /**
+     * @param String $precipitation
+     */
+    public function setPrecipitation($precipitation)
+    {
+        $this->precipitation = $precipitation;
+    }
+
+    /**
      * The wind direction have three attributes with value
      *     deg
      *     code [default]
@@ -153,7 +169,15 @@ class Forecast {
      */
     public function getWindDirection($key = "code")
     {
-        return isset($this->wind_direction[$key]) ? $this->wind_direction[$key] : $this->wind_direction;
+        return isset($this->wind_direction[$key]) ? $this->wind_direction[$key] : null;
+    }
+
+    /**
+     * @param array $wind_direction
+     */
+    public function setWindDirection($wind_direction)
+    {
+        $this->wind_direction = $wind_direction;
     }
 
     /**
@@ -165,7 +189,15 @@ class Forecast {
      * @return string|array default value is meters pr sec
      */
     public function getWindSpeed($key = "mps") {
-        return isset($this->wind_speed[$key]) ? $this->wind_speed[$key] : $this->wind_speed;
+        return isset($this->wind_speed[$key]) ? $this->wind_speed[$key] : null;
+    }
+
+    /**
+     * @param array $wind_speed
+     */
+    public function setWindSpeed($wind_speed)
+    {
+        $this->wind_speed = $wind_speed;
     }
 
     /**
@@ -212,6 +244,14 @@ class Forecast {
     }
 
     /**
+     * @param array $temperature
+     */
+    public function setTemperature($temperature)
+    {
+        $this->temperature = $temperature;
+    }
+
+    /**
      * The pressure have two attributes with value
      *     unit
      *     value [default]
@@ -220,7 +260,15 @@ class Forecast {
      * @return string|array see documentation
      */
     public function getPressure($key = "value") {
-        return isset($this->pressure[$key]) ? $this->pressure[$key] : $this->pressure;
+        return isset($this->pressure[$key]) ? $this->pressure[$key] : null;
+    }
+
+    /**
+     * @param array $pressure
+     */
+    public function setPressure($pressure)
+    {
+        $this->pressure = $pressure;
     }
 
     /**
