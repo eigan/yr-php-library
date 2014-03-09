@@ -6,7 +6,8 @@ namespace Yr;
  * 
  * Please read the rules for using the yr api http://om.yr.no/verdata/vilkar/
  * This class will implement caching for you
- * 
+ *
+ * @package Yr
  * @see http://om.yr.no/verdata/free-weather-data/
  * @author Einar Gangsø <einargangso@gmail.com>
  */
@@ -144,11 +145,11 @@ class Yr {
      */
     public static function create($location, $cache_path, $cache_life = 10, $language = "english")
     {
-        if(!isset($location)) {
+        if(!isset($location) || empty($location)) {
             throw new \InvalidArgumentException("Location need to be set");
         }
 
-        if(!isset($cache_path)) {
+        if(!isset($cache_path) || empty($cache_path)) {
             throw new \InvalidArgumentException("Cache path need to be set");
         }
 
@@ -160,7 +161,7 @@ class Yr {
 
         // Check if cache path is readable
         if(!is_writable($cache_path)) {
-            throw new \RuntimeException("Cache path is not writable");
+            throw new \RuntimeException("Cache path ($cache_path) is not writable");
         }
 
         // Cache paths for the location
@@ -197,8 +198,7 @@ class Yr {
         $forecasts_hourly = array();
         foreach($xml_hourly->forecast->tabular->time as $forecast) {
             try {
-                $tmp = Forecast::getForecastFromXml($forecast);
-                $forecasts_hourly[] = $tmp;
+                $forecasts_hourly[] = Forecast::getForecastFromXml($forecast);
             } catch(\RuntimeException $e) {}
         }
 
@@ -206,8 +206,7 @@ class Yr {
         $forecasts_periodic = array();
         foreach($xml_periodic->forecast->tabular->time as $forecast) {
             try {
-                $tmp = Forecast::getForecastFromXml($forecast);
-                $forecasts_periodic[] = $tmp;
+                $forecasts_periodic[] = Forecast::getForecastFromXml($forecast);
             } catch(\RuntimeException $e) {}
         }
 
@@ -257,6 +256,7 @@ class Yr {
      *     type
      *     country
      *
+     * @todo return lat/lang
      * @param String $key
      * @return String
      */

@@ -4,7 +4,10 @@ namespace Yr;
 
 /**
  * Representing a forecast for the yr service
- * Every internal variable is public because setting the variable will be faster
+ * Please do not use the public vars directly
+ *
+ * @package Yr
+ * @author Einar Gangsø <einargangso@gmail.com>
  */
 class Forecast {
 
@@ -78,6 +81,10 @@ class Forecast {
 
         $data = Yr::xmlToArray($xml);
 
+        if(!isset($data['from'], $data['to'])) {
+            throw new \RuntimeException("Missing from/to for forecast");
+        }
+
         $forecast->from = \DateTime::createFromFormat(Yr::XML_DATE_FORMAT, $data['from']);
         $forecast->to = \DateTime::createFromFormat(Yr::XML_DATE_FORMAT, $data['to']);
         $forecast->period = isset($data['period']) ? $data['period'] : "";
@@ -103,12 +110,11 @@ class Forecast {
 
     /**
      * The symbol have three attributes with value
-     *     number
+     *     number [default]
      *     name
      *     var
      *
      * Default value will give "number"
-     * Passing null will result in an array, containg both values
      *
      * @param String $key number|name|var
      * @return string|array default is name
@@ -120,12 +126,11 @@ class Forecast {
 
     /**
      * The symbol can have three attributes with value
-     *     value
+     *     value [default]
      *     minvalue
      *     maxvalue
      *
      * Default value will give "value"
-     * Passing null will result in an array, containg both values
      *
      * @param String $key value|minvalue|maxvalue
      * @return string 
@@ -199,9 +204,7 @@ class Forecast {
     /**
      * The temperatur have two attributes with value
      *     unit
-     *     value
-     *
-     * Passing null will result in an array, containg both values
+     *     value [default]
      *
      * @param String $key value|unit
      * @return string|array see documentation
@@ -214,9 +217,7 @@ class Forecast {
     /**
      * The pressure have two attributes with value
      *     unit
-     *     value
-     *
-     * Passing null will result in an array, containg both values
+     *     value [default]
      *
      * @param String $key value|unit
      * @return string|array see documentation
@@ -265,13 +266,13 @@ class Forecast {
      */
     public function getPeriod()
     {
-        return $this->period;
+        return strlen($this->period) > 0 ? $this->period : null;
     }
 
     /**
      * @param int $period
      */
-    public function setPeriod($period = null)
+    public function setPeriod($period)
     {
         $this->period = $period;
     }
