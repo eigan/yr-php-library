@@ -586,4 +586,19 @@ class Yr {
 
         return self::SERVICE_UNKNOWN_STATE;
     }
+
+    public function toArray() {
+        return array(
+            'location'    => $this->location,
+            'links'       => $this->links,
+            'last_update' => $this->getLastUpdated(),
+            'next_update' => $this->getNextUpdate(),
+            'credit_text' => $this->getCreditText(),
+            'credit_url'  => $this->getCreditUrl(),
+            'sunrise'     => $this->getSunrise(),
+            'sunset'      => $this->getSunset(),
+            'forecasts'   => $this->getHourlyForecasts(),
+            'weather_stations' => $this->getWeatherStations()
+        );
+    }
 }

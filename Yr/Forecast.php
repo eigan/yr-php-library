@@ -321,4 +321,20 @@ class Forecast {
     {
         $this->period = $period;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return array(
+            'from' => $this->getFrom(),
+            'to'   => $this->getTo(),
+            'symbol' => $this->symbol,
+            'temperature' => $this->temperature,
+            'wind_speed' => $this->wind_speed,
+            'wind_direction' => $this->wind_direction,
+            'period' => $this->period
+        );
+    }
 }
