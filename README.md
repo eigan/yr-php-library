@@ -42,6 +42,11 @@ echo sprintf("Time: %s to %s\n", $forecast->getFrom()->format("H:i"), $forecast-
 echo sprintf("Temp: %s %s\n", $forecast->getTemperature(), $forecast->getTemperature('unit'));
 echo sprintf("Wind: %smps %s\n", $forecast->getWindSpeed(), $forecast->getWindDirection('name'));
 ```
+```
+Time: 16:00 to 17:00
+Temp: 8 celsius 
+Wind: 5.7mps South-southwest
+```
 
 #### Forecasts tomorrow
 ```php
@@ -50,6 +55,12 @@ $yr = Yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp");
 foreach($yr->getPeriodicForecasts(strtotime("tomorrow"), strtotime("midnight second day") - 1/*sec*/) as $forecast) {
     echo sprintf("Time: %s, %s degrees\n", $forecast->getFrom()->format("H:i"), $forecast->getTemperature());
 }
+```
+```
+Time: 00:00, 5 degrees
+Time: 06:00, 2 degrees
+Time: 12:00, 8 degrees
+Time: 18:00, 7 degrees
 ```
 
 #### Hourly forecasts rest of the day
@@ -60,6 +71,12 @@ $yr = Yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp");
 foreach($yr->getHourlyForecasts(strtotime("now"), strtotime("tomorrow") - 1/*sec*/) as $forecast) {
     echo sprintf("Time: %s, %s degrees\n", $forecast->getFrom()->format("H:i"), $forecast->getTemperature());
 }
+```
+```
+Time: 20:00: 5 degrees
+Time: 21:00: 4 degrees
+Time: 22:00: 3 degrees
+Time: 23:00: 3 degrees
 ```
 
 See more examples in [examples directory](https://github.com/eigan/yr-php-library/tree/master/examples).
