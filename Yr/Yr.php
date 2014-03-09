@@ -25,12 +25,10 @@ class Yr {
     protected $forecasts_periodic;
 
     /**
-    /**
      * List of WheaterStation objects
-     * @var array
+     * @var WeatherStation[]
      */
-    protected $observations;
-
+    protected $weather_stations;
 
     /**
      * The location where we have weather data
@@ -114,11 +112,11 @@ class Yr {
      */
     public function __construct(array $location, array $forecasts_periodic, array $forecasts_hourly)
     {
-        $this->location = $location;
-        $this->forecasts_periodic = $forecasts_periodic;
-        $this->forecasts_hourly = $forecasts_hourly;
-
-        $this->links = array();
+        $this->location             = $location;
+        $this->forecasts_periodic   = $forecasts_periodic;
+        $this->forecasts_hourly     = $forecasts_hourly;
+        $this->links                = array();
+        $this->weather_stations     = array();
     }
 
     /**
@@ -210,6 +208,16 @@ class Yr {
             } catch(\RuntimeException $e) {}
         }
 
+        // weather_stations
+        $weather_stations = array();
+        foreach($xml_hourly->observations->weatherstation as $observation) {
+            try {
+                $weather_stations[] = WeatherStation::getWeatherStationFromXml($observation);
+            } catch(\Exception $e) {
+                // any invalid weatherstations will simply be ignored
+            }
+        }
+
         // Get other data for our object
         $location = self::xmlToArray($xml_periodic->location);
         $links = self::xmlToArray($xml_periodic->links);
@@ -220,7 +228,9 @@ class Yr {
         // Set the data on the object        
         try {
             $yr = new Yr($location, $forecasts_periodic, $forecasts_hourly);
-            
+
+            $yr->setWeatherStations($weather_stations);
+
             if(isset($links['link'])) {
                 foreach($links['link'] as $link) {
                     $yr->addLink($link['id'], $link['url']);
@@ -372,6 +382,22 @@ class Yr {
         }
 
         return $result;
+    }
+
+    /**
+     * @return WeatherStation[]
+     */
+    public function getWeatherStations()
+    {
+        return $this->weather_stations;
+    }
+
+    /**
+     * @param WeatherStation[] $weather_stations
+     */
+    public function setWeatherStations($weather_stations)
+    {
+        $this->weather_stations = $weather_stations;
     }
 
     /**
