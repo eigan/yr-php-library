@@ -99,10 +99,13 @@ class YrTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testGetLocation() {
-        $this->assertTrue(is_string($this->yr->getLocation("type")) && !empty($this->yr->getLocation("type")));
+        $location = $this->yr->getLocation("type");
+        $this->assertTrue(is_string($location) && !empty($location));
 
-        $this->assertTrue($this->yr->getLocation() === "Oslo");
-        $this->assertTrue($this->yr->getLocation("country") === "Norway");
+        $location = $this->yr->getLocation();
+        $this->assertTrue($location === "Oslo");
+        $country = $this->yr->getLocation("country");
+        $this->assertTrue($country === "Norway");
     }
 
     public function testGetCredit() {
