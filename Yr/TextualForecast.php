@@ -40,10 +40,11 @@ class TextualForecast {
     /**
      * @param String $title
      * @param String $text
-     * @param \Datetime $from
-     * @param \Datetime $to
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @throws \InvalidArgumentException
      */
-    public function __construct($title, $text, $from, $to = null) {
+    public function __construct($title, $text, \DateTime $from, \DateTime $to = null) {
         if(empty($title) || empty($text)) {
             throw new \InvalidArgumentException("Title/or text is empty");
         }
@@ -55,10 +56,11 @@ class TextualForecast {
     }
 
     /**
+     * @param \SimpleXMLElement $xml
      * @return TextualForecast
-     * @throws \IllegalArgumentException
+     * @throws \InvalidArgumentException
      */
-    public static function createTextualForecastFromXml($xml) {
+    public static function createTextualForecastFromXml(\SimpleXMLElement $xml) {
         $data = Yr::xmlToArray($xml);
 
         $title = $data['title'];

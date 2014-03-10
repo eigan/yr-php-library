@@ -77,7 +77,6 @@ class Location {
      * @param array $location 
      * @param array $forecasts_periodic
      * @param  array $forecasts_hourly
-     * @return Yr
      */
     public function __construct(array $location, array $forecasts_periodic, array $forecasts_hourly)
     {

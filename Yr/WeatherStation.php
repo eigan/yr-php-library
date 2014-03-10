@@ -17,7 +17,7 @@ class WeatherStation {
     protected $name;
 
     /**
-     * @var numeric
+     * @var int
      */
     protected $distance;
 
@@ -98,7 +98,7 @@ class WeatherStation {
     }
 
     /**
-     * @return numeric
+     * @return int
      */
     public function getDistance()
     {
