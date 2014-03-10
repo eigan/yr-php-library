@@ -118,6 +118,7 @@ class Yr {
     public static function create($location, $cache_path, $cache_life = 10, $language = "english");
 }
 ```
+
 ### Location
 ```php
 class Location {
@@ -190,6 +191,11 @@ class Location {
      */
     public function getForecastAt($time);
 
+    /**
+     * Note: Th textual forecasts is always norwegian..
+     * @return TextualForecast[]
+     */
+    public function getTextualForecasts();
 
     /**
      * @return WeatherStation[]
@@ -236,12 +242,12 @@ class Location {
      */
     public function toArray();
 }
+```
 
 ### Forecast
 ```php
 /**
  * Representing a forecast for the yr service
- * Please do not use the public vars directly
  *
  */
 class Forecast {
@@ -380,6 +386,7 @@ class TextualForecast {
      * @return \Datetime
      */
     public function getFrom();
+    
     /**
      * @return \DateTime
      */
