@@ -1,9 +1,6 @@
 <?php
 
 class YrTest extends PHPUnit_Framework_TestCase {
-    function setUp() {
-        $this->yr = Yr\Yr::create("Norway/Oslo/Oslo/Oslo", "/tmp");
-    }
 
     public function testCreate() {
         $yr = Yr\Yr::create("Norway/Oslo/Oslo/Oslo", "/tmp", 10, "english");
