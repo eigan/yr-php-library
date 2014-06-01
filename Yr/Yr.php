@@ -43,8 +43,7 @@ class Yr {
     /**
      */
     protected function __construct()
-    {
-    }
+    {}
 
     /**
      * This method builds the Yr object from the freely available Yr api

@@ -3,9 +3,9 @@
 $yr = Yr\Yr::create("Norway/Oslo/Oslo/Oslo", "/tmp");
 
 $forecast = $yr->getCurrentForecast();
-echo sprintf("Time: %s to %s\n", $forecast->getFrom()->format("H:i"), $forecast->getTo()->format("H:i"));
-echo sprintf("Temp: %s %s \n", $forecast->getTemperature(), $forecast->getTemperature('unit'));
-echo sprintf("Wind: %smps %s\n", $forecast->getWindSpeed(), $forecast->getWindDirection('name'));
+printf("Time: %s to %s\n", $forecast->getFrom()->format("H:i"), $forecast->getTo()->format("H:i"));
+printf("Temp: %s %s \n", $forecast->getTemperature(), $forecast->getTemperature('unit'));
+printf("Wind: %smps %s\n", $forecast->getWindSpeed(), $forecast->getWindDirection('name'));
 ```
 ```
 Time: 16:00 to 17:00
@@ -18,7 +18,7 @@ Wind: 5.7mps South-southwest
 $yr = Yr\Yr::create("Norway/Vestfold/Sandefjord/Sandefjord", "/tmp");
 
 foreach($yr->getHourlyForecasts(strtotime("now"), strtotime("tomorrow")) as $forecast) {
-    echo sprintf("Time: %s, %s degrees\n", $forecast->getFrom()->format("H:i"), $forecast->getTemperature());
+    printf("Time: %s, %s degrees\n", $forecast->getFrom()->format("H:i"), $forecast->getTemperature());
 }
 ```
 ```
