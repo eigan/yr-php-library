@@ -235,7 +235,9 @@ class Location {
     }
 
     /**
-     * Note: Th textual forecasts is always norwegian..
+     * Note: The textual forecasts is always norwegian..
+     * Note: Places outside of Norway might not have textual forecasts
+     *
      * @return TextualForecast[]
      */
     public function getTextualForecasts() {
@@ -250,6 +252,8 @@ class Location {
     }
 
     /**
+     * Note: Places outside of Norway might not have weather stations
+     *
      * @return WeatherStation[]
      */
     public function getWeatherStations()

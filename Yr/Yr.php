@@ -109,12 +109,22 @@ class Yr {
 
         // Download the periodic xml if we doesnt have it
         if(!is_readable($xml_periodic_path) || (time() - filemtime($xml_periodic_path) > ($cache_life * 60))) {
-            file_put_contents($xml_periodic_path, fopen("$baseurl/$location/forecast.xml", 'r'));
+            $xml_content = fopen("$baseurl/$location/forecast.xml", 'r');
+            
+            if(!empty($xml_content)) {
+                // Only cache if there is content from request (is empty when no internet connection)
+                file_put_contents($xml_periodic_path, $xml_content);
+            }   
         }
 
         // Download the hourly xml if we doesnt have it
         if(!is_readable($xml_hourly_path) || (time() - filemtime($xml_hourly_path) > ($cache_life * 60))) {
-            file_put_contents($xml_hourly_path, fopen("$baseurl/$location/forecast_hour_by_hour.xml", 'r'));
+            $xml_content = fopen("$baseurl/$location/forecast_hour_by_hour.xml", 'r');
+
+            if(!empty($xml_content)) {
+                // Only cache if there is content from request (is empty when no internet connection)
+                file_put_contents($xml_hourly_path, $xml_content);
+            }
         }
 
         $xml_hourly = new \SimpleXMLElement($xml_hourly_path, null, true);
@@ -137,18 +147,24 @@ class Yr {
         }
 
         $textual_forecasts = array();
-        foreach($xml_hourly->forecast->text->location->time as $forecast) {
-            try {
-                $textual_forecasts[] = TextualForecast::createTextualForecastFromXml($forecast);
-            } catch(\Exception $e) {} // Skip those we cant create..
+
+        // Some places to not have textual forecasts
+        if(!empty($xml_hourly->forecast->text)) {
+            foreach($xml_hourly->forecast->text->location->time as $forecast) {
+                try {
+                    $textual_forecasts[] = TextualForecast::createTextualForecastFromXml($forecast);
+                } catch(\Exception $e) {} // Skip those we cant create..
+            }
         }
 
         // weather_stations
         $weather_stations = array();
-        foreach($xml_hourly->observations->weatherstation as $observation) {
-            try {
-                $weather_stations[] = WeatherStation::getWeatherStationFromXml($observation);
-            } catch(\Exception $e) {} // Skip those we cant create..
+        if(!empty($xml_hourly->observations)) {
+            foreach($xml_hourly->observations->weatherstation as $observation) {
+                try {
+                    $weather_stations[] = WeatherStation::getWeatherStationFromXml($observation);
+                } catch(\Exception $e) {} // Skip those we cant create..
+            }
         }
 
         // Get other data for our object
