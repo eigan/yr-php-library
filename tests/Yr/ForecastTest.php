@@ -78,11 +78,11 @@ class ForecastTest extends PHPUnit_Framework_TestCase {
 
     public function testGetTemperature() {
         $temperature = $this->forecast->getTemperature();
-        $this->assertTrue(is_string($temperature) && !empty($temperature));
+        $this->assertTrue(is_string($temperature) && ($temperature == 0 || !empty($temperature)));
         $temperature = $this->forecast->getTemperature("unit");
         $this->assertTrue(is_string($temperature) && !empty($temperature));
         $temperature = $this->forecast->getTemperature("value");
-        $this->assertTrue(is_string($temperature) && !empty($temperature));
+        $this->assertTrue(is_string($temperature) && ($temperature == 0 || !empty($temperature)));
     }
 
     public function testGetPressure() {
