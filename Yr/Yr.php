@@ -40,6 +40,8 @@ class Yr {
      */
     const SERVICE_UNKNOWN_STATE = 10;
 
+    const CACHE_PREFIX = "phpyrno_";
+
     /**
      */
     protected function __construct()
@@ -77,7 +79,7 @@ class Yr {
             throw new \InvalidArgumentException("Cache path need to be set");
         }
 
-        // Get url, different from lang to lang
+        // Get url, different for each language
         $baseurl = self::getApiUrlByLanguage($language);
 
         // Clean the cache path
@@ -89,8 +91,8 @@ class Yr {
         }
 
         // Cache paths for the location
-        $xml_periodic_path = $cache_path . "phpyrno_" . md5($baseurl . $location) . "_periodic.xml";
-        $xml_hourly_path = $cache_path . "phpyrno_" . md5($baseurl . $location) . "_hourly.xml";
+        $xml_periodic_path = $cache_path . self::CACHE_PREFIX . md5($baseurl . $location) . "_periodic.xml";
+        $xml_hourly_path = $cache_path . self::CACHE_PREFIX . md5($baseurl . $location) . "_hourly.xml";
 
         // Check response from web service
         // This is a critical process if we have no cache. Please see Yr::getUrlResponseCode() for explanation
@@ -123,7 +125,7 @@ class Yr {
         foreach($xml_hourly->forecast->tabular->time as $forecast) {
             try {
                 $forecasts_hourly[] = Forecast::getForecastFromXml($forecast);
-            } catch(\RuntimeException $e) {}
+            } catch(\RuntimeException $e) {} // Skip those we cant create..
         }
 
         // Get all the periodic forecasts and create Forecast objects
@@ -131,14 +133,14 @@ class Yr {
         foreach($xml_periodic->forecast->tabular->time as $forecast) {
             try {
                 $forecasts_periodic[] = Forecast::getForecastFromXml($forecast);
-            } catch(\RuntimeException $e) {}
+            } catch(\RuntimeException $e) {} // Skip those we cant create..
         }
 
         $textual_forecasts = array();
         foreach($xml_hourly->forecast->text->location->time as $forecast) {
             try {
                 $textual_forecasts[] = TextualForecast::createTextualForecastFromXml($forecast);
-            } catch(\Exception $e) {}
+            } catch(\Exception $e) {} // Skip those we cant create..
         }
 
         // weather_stations
@@ -146,17 +148,15 @@ class Yr {
         foreach($xml_hourly->observations->weatherstation as $observation) {
             try {
                 $weather_stations[] = WeatherStation::getWeatherStationFromXml($observation);
-            } catch(\Exception $e) {
-                // any invalid weatherstations will simply be ignored
-            }
+            } catch(\Exception $e) {} // Skip those we cant create..
         }
 
         // Get other data for our object
         $location = self::xmlToArray($xml_periodic->location);
-        $links = self::xmlToArray($xml_periodic->links);
-        $credit = self::xmlToArray($xml_periodic->credit->link);
-        $meta = self::xmlToArray($xml_hourly->meta);
-        $sun = self::xmlToArray($xml_periodic->sun);
+        $links    = self::xmlToArray($xml_periodic->links);
+        $credit   = self::xmlToArray($xml_periodic->credit->link);
+        $meta     = self::xmlToArray($xml_periodic->meta);
+        $sun      = self::xmlToArray($xml_periodic->sun);
 
         // Set the data on the object        
         try {
@@ -190,6 +190,14 @@ class Yr {
             // We fall back and send exception if something goes wrong
             throw new \RuntimeException("Could not create Location object");
         }
+    }
+
+    /**
+     * Utility method to get water temperatures
+     *
+     */
+    public function getWaterTemperatures() {
+        
     }
 
     /**
@@ -280,6 +288,10 @@ class Yr {
             $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
             curl_close($ch);
+
+            if($retcode === 0) {
+                throw new \RuntimeException("Check your internet connection");
+            }
 
             // This might happend for 5-10 times
             // just skipping to next request if this does happen

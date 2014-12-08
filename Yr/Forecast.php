@@ -109,12 +109,13 @@ class Forecast {
     }
 
     /**
-     * The symbol have three attributes with value
-     *     number [default]
-     *     name
+     * The symbol have four attributes with value
+     *     number 
+     *     numberEx
+     *     name     [default]
      *     var
      *
-     * Default value will give "number"
+     * Default value will give "name"
      *
      * @param String $key number|name|var
      * @return string|array default is name
