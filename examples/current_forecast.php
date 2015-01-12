@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "autoload.php";
+include __DIR__.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."autoload.php";
 
 $yr = Yr\Yr::create("Norway/Oslo/Oslo/Oslo", "/tmp");
 

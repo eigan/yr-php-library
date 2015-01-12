@@ -11,17 +11,17 @@
 include_once "Yr/Yr.php";
 include_once "Yr/Forecast.php";
 
-// This is not set by default in ini (OSX), 
+// This is not set by default in ini (OSX),
 // so override to standard norwegian to avoid warnings
 date_default_timezone_set("Europe/Oslo");
 
 // Saving you
-set_error_handler(function($errno, $msg) {
-	// Just print the error
-	echo "PHP Error: " . $msg . "\n";
+set_error_handler(function ($errno, $msg) {
+    // Just print the error
+    echo "PHP Error: ".$msg."\n";
 
-	// Do not go to internal php error handler
-	return true;
+    // Do not go to internal php error handler
+    return true;
 });
 
 // Possible to override default values
@@ -34,6 +34,6 @@ $language = !isset($language) ? "english" : $language;
 $yr = Yr\Yr::create($location, $cache_path, $cache_life, $language);
 
 // Notice user if the yr object was created
-if($yr instanceof Yr\Yr) {
-	print "An Yr object is now available on " . '$yr';
+if ($yr instanceof Yr\Yr) {
+    print "An Yr object is now available on ".'$yr';
 }

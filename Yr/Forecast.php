@@ -9,8 +9,8 @@ namespace Yr;
  * @package Yr
  * @author Einar Gangsø <einargangso@gmail.com>
  */
-class Forecast {
-
+class Forecast
+{
     /**
      * From datetime
      * @var \DateTime
@@ -20,7 +20,7 @@ class Forecast {
     /**
      * To datetime
      * @var \DateTime
-     */    
+     */
     public $to;
 
     /**
@@ -66,7 +66,6 @@ class Forecast {
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -81,7 +80,7 @@ class Forecast {
 
         $data = Yr::xmlToArray($xml);
 
-        if(!isset($data['from'], $data['to'])) {
+        if (!isset($data['from'], $data['to'])) {
             throw new \RuntimeException("Missing from/to for forecast");
         }
 
@@ -89,11 +88,11 @@ class Forecast {
         $forecast->to = \DateTime::createFromFormat(Yr::XML_DATE_FORMAT, $data['to']);
         $forecast->period = isset($data['period']) ? $data['period'] : "";
 
-        if(!isset($data['symbol'], 
-                  $data['precipitation'], 
-                  $data['windDirection'], 
-                  $data['windSpeed'], 
-                  $data['temperature'], 
+        if (!isset($data['symbol'],
+                  $data['precipitation'],
+                  $data['windDirection'],
+                  $data['windSpeed'],
+                  $data['temperature'],
                   $data['pressure'])) {
             throw new \RuntimeException("Missing data for forecast");
         }
@@ -110,17 +109,17 @@ class Forecast {
 
     /**
      * The symbol have four attributes with value
-     *     number 
+     *     number
      *     numberEx
      *     name     [default]
      *     var
      *
      * Default value will give "name"
      *
-     * @param String $key number|name|var
+     * @param  String       $key number|name|var
      * @return string|array default is name
      */
-    public function getSymbol($key = "name") 
+    public function getSymbol($key = "name")
     {
         return isset($this->symbol[$key]) ? $this->symbol[$key] : null;
     }
@@ -141,8 +140,8 @@ class Forecast {
      *
      * Default value will give "value"
      *
-     * @param String $key value|minvalue|maxvalue
-     * @return string 
+     * @param  String $key value|minvalue|maxvalue
+     * @return string
      */
     public function getPrecipitation($key = "value")
     {
@@ -165,7 +164,7 @@ class Forecast {
      *
      * Default value will send the code
      *
-     * @param String $key deg|code|name
+     * @param  String       $key deg|code|name
      * @return string|array default is code
      */
     public function getWindDirection($key = "code")
@@ -186,10 +185,11 @@ class Forecast {
      *     mps [default]
      *     name
      *
-     * @param String $key mps|name
+     * @param  String       $key mps|name
      * @return string|array default value is meters pr sec
      */
-    public function getWindSpeed($key = "mps") {
+    public function getWindSpeed($key = "mps")
+    {
         return isset($this->wind_speed[$key]) ? $this->wind_speed[$key] : null;
     }
 
@@ -203,9 +203,9 @@ class Forecast {
 
     /**
      * Utility method to get the filename for the arrows (speed and direction)
-     * 
+     *
      * http://fil.nrk.no/yr/grafikk/vindpiler/32/vindpil.{$speed}.{$degree}.png
-     * 
+     *
      * So you can use the icon like so:
      * http://fil.nrk.no/yr/grafikk/vindpiler/32/vindpil.{$forecast->getWindIconKey()}.png
      *
@@ -213,12 +213,13 @@ class Forecast {
      *
      * @returm string
      */
-    public function getWindIconKey() {
+    public function getWindIconKey()
+    {
         $speed = (round(($this->getWindSpeed("mps")/2.5)) * 2.5) * 10;
         $speed = str_pad($speed, 4, '0', STR_PAD_LEFT);
 
         // 2 and down is 0 speed - vindstille
-        if($this->getWindSpeed() <= 0.2) {
+        if ($this->getWindSpeed() <= 0.2) {
             return 0;
         }
 
@@ -226,7 +227,9 @@ class Forecast {
         $degree = str_pad($degree, 3, '0', STR_PAD_LEFT);
 
         // 360 degree is 0
-        if($degree >= 360) $degree = 0;
+        if ($degree >= 360) {
+            $degree = 0;
+        }
 
         return "$speed.$degree";
     }
@@ -236,7 +239,7 @@ class Forecast {
      *     unit
      *     value [default]
      *
-     * @param String $key value|unit
+     * @param  String       $key value|unit
      * @return string|array see documentation
      */
     public function getTemperature($key = "value")
@@ -257,10 +260,11 @@ class Forecast {
      *     unit
      *     value [default]
      *
-     * @param String $key value|unit
+     * @param  String       $key value|unit
      * @return string|array see documentation
      */
-    public function getPressure($key = "value") {
+    public function getPressure($key = "value")
+    {
         return isset($this->pressure[$key]) ? $this->pressure[$key] : null;
     }
 
@@ -335,7 +339,7 @@ class Forecast {
             'temperature' => $this->temperature,
             'wind_speed' => $this->wind_speed,
             'wind_direction' => $this->wind_direction,
-            'period' => $this->period
+            'period' => $this->period,
         );
     }
 }

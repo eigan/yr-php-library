@@ -9,8 +9,8 @@ namespace Yr;
  * @package Yr
  * @author Einar Gangsø <einargangso@gmail.com>
  */
-class WeatherStation {
-
+class WeatherStation
+{
     /**
      * @var String
      */
@@ -36,7 +36,6 @@ class WeatherStation {
      */
     protected $forecast;
 
-
     /**
      * @param $name
      * @param $distance
@@ -54,7 +53,7 @@ class WeatherStation {
     }
 
     /**
-     * @param \SimpleXMLElement $xml
+     * @param  \SimpleXMLElement $xml
      * @return WeatherStation
      */
     public static function getWeatherStationFromXml(\SimpleXMLElement $xml)
@@ -70,19 +69,19 @@ class WeatherStation {
 
         $forecast = $station->getForecast();
 
-        if(isset($data['symbol'])) {
+        if (isset($data['symbol'])) {
             $forecast->setSymbol($data['symbol']);
         }
 
-        if(isset($data['temperature'])) {
+        if (isset($data['temperature'])) {
             $forecast->setTemperature($data['temperature']);
         }
 
-        if(isset($data['windDirection'])) {
+        if (isset($data['windDirection'])) {
             $forecast->setWindDirection($data['windDirection']);
         }
 
-        if(isset($data['windSpeed'])) {
+        if (isset($data['windSpeed'])) {
             $forecast->setWindSpeed($data['windSpeed']);
         }
 
@@ -116,7 +115,7 @@ class WeatherStation {
     }
 
     /**
-     * 
+     *
      * @return String
      */
     public function getSource()
@@ -152,7 +151,7 @@ class WeatherStation {
             'distance' => $this->distance,
             'latLong' => $this->latLong,
             'source' => $this->source,
-            'forecast' => $this->forecast
+            'forecast' => $this->forecast,
         );
     }
 }
