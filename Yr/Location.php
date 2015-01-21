@@ -226,7 +226,7 @@ class Location
         $result = array();
 
         // Check for null, or non valid unixtimes
-        $from = is_null($from) || !is_int($to) ? time() : $from;
+        $from = is_null($from) || !is_int($from) ? time() : $from;
         $to = is_null($to) || !is_int($to) ? strtotime("1 year") : $to;
 
         foreach ($forecasts as $forecast) {
