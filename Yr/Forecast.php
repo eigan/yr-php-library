@@ -4,74 +4,90 @@ namespace Yr;
 
 /**
  * Representing a forecast for the yr service
- * Please do not use the public vars directly
+ * Please do not use the public vars directly.
  *
- * @package Yr
- * @author Einar Gangsø <einargangso@gmail.com>
+ * @author  Einar Gangsø <einargangso@gmail.com>
  */
 class Forecast
 {
     /**
-     * From datetime
+     * From datetime.
+     *
      * @var \DateTime
      */
     public $from;
 
     /**
-     * To datetime
+     * To datetime.
+     *
      * @var \DateTime
      */
     public $to;
 
     /**
-     * Period of the date, will be a number from 0 to 4, where 0 is early in the morning and 4 is at night
+     * Period of the date, will be a number from 0 to 4
+     * where 0 is early in the morning and 4 is at night.
+     *
      * @var int
      */
     public $period;
 
     /**
-     * Typically the icon to display
+     * Typically the icon to display.
+     *
      * @var array
      */
     public $symbol;
 
     /**
-     * Precipitation in millimeters
+     * Precipitation in millimeters.
+     *
      * @var String
      */
     public $precipitation;
 
     /**
+     * Data for wind direction.
+     *
      * @var array
      */
     public $wind_direction;
 
     /**
+     * Data for wind speed.
+     *
      * @var array
      */
     public $wind_speed;
 
     /**
+     * Data for temperature.
+     *
      * @var array
      */
     public $temperature;
 
     /**
+     * Data for pressure.
+     *
      * @var array
      */
     public $pressure;
 
     /**
-     * We do NOTHING
+     * We do NOTHING.
      */
     public function __construct()
     {
     }
 
     /**
-     * Creates from simplexml object
-     * @param  \SimpleXMLElement $xml The xml node element
+     * Creates from simplexml object.
+     *
+     * @param \SimpleXMLElement $xml The xml node element
+     *
      * @return Forecast
+     *
      * @throws \RuntimeException If some data is missing for xml
      */
     public static function getForecastFromXml(\SimpleXMLElement $xml)
@@ -112,11 +128,12 @@ class Forecast
      *     number
      *     numberEx
      *     name     [default]
-     *     var
+     *     var.
      *
      * Default value will give "name"
      *
-     * @param  String       $key number|name|var
+     * @param String $key number|name|var
+     *
      * @return string|array default is name
      */
     public function getSymbol($key = "name")
@@ -136,11 +153,12 @@ class Forecast
      * The symbol can have three attributes with value
      *     value [default]
      *     minvalue
-     *     maxvalue
+     *     maxvalue.
      *
      * Default value will give "value"
      *
-     * @param  String $key value|minvalue|maxvalue
+     * @param String $key value|minvalue|maxvalue
+     *
      * @return string
      */
     public function getPrecipitation($key = "value")
@@ -160,11 +178,12 @@ class Forecast
      * The wind direction have three attributes with value
      *     deg
      *     code [default]
-     *     name
+     *     name.
      *
      * Default value will send the code
      *
-     * @param  String       $key deg|code|name
+     * @param String $key deg|code|name
+     *
      * @return string|array default is code
      */
     public function getWindDirection($key = "code")
@@ -183,9 +202,10 @@ class Forecast
     /**
      * The wind speed have two attributes with value
      *     mps [default]
-     *     name
+     *     name.
      *
-     * @param  String       $key mps|name
+     * @param String $key mps|name
+     *
      * @return string|array default value is meters pr sec
      */
     public function getWindSpeed($key = "mps")
@@ -202,7 +222,7 @@ class Forecast
     }
 
     /**
-     * Utility method to get the filename for the arrows (speed and direction)
+     * Utility method to get the filename for the arrows (speed and direction).
      *
      * http://fil.nrk.no/yr/grafikk/vindpiler/32/vindpil.{$speed}.{$degree}.png
      *
@@ -237,9 +257,10 @@ class Forecast
     /**
      * The temperatur have two attributes with value
      *     unit
-     *     value [default]
+     *     value [default].
      *
-     * @param  String       $key value|unit
+     * @param String $key value|unit
+     *
      * @return string|array see documentation
      */
     public function getTemperature($key = "value")
@@ -258,9 +279,10 @@ class Forecast
     /**
      * The pressure have two attributes with value
      *     unit
-     *     value [default]
+     *     value [default].
      *
-     * @param  String       $key value|unit
+     * @param String $key value|unit
+     *
      * @return string|array see documentation
      */
     public function getPressure($key = "value")
@@ -277,7 +299,8 @@ class Forecast
     }
 
     /**
-     * Time from when the forecast begins
+     * Time from when the forecast begins.
+     *
      * @return \DateTime
      */
     public function getFrom()
@@ -294,7 +317,8 @@ class Forecast
     }
 
     /**
-     * Time for when the forecast ends
+     * Time for when the forecast ends.
+     *
      * @return \DateTime
      */
     public function getTo()
@@ -311,7 +335,8 @@ class Forecast
     }
 
     /**
-     * Period of the day. This might be null in hourly
+     * Period of the day. This might be null in hourly.
+     *
      * @return int|null
      */
     public function getPeriod()
