@@ -327,7 +327,6 @@ class Yr
             case "neonorwegian":
             case "nynorsk":
                 return self::API_URL."sted/";
-            break;
 
             default:
                 return self::API_URL."place/";
