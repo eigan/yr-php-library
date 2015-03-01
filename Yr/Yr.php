@@ -204,7 +204,7 @@ class Yr
     /**
      * Converts xml to array and hide comments.
      *
-     * @param object $data xml data
+     * @param array|\SimpleXMLElement $data xml data
      *
      * @return array
      */
@@ -234,7 +234,7 @@ class Yr
     }
 
     /**
-     * @param  String xml
+     * @param  \SimpleXMLElement $xml
      *
      * @return WeatherStation[]
      */
@@ -255,7 +255,7 @@ class Yr
     }
 
     /**
-     * @param String $xml
+     * @param \SimpleXMLElement $xml
      *
      * @return TextualForecast[]
      */
@@ -278,6 +278,7 @@ class Yr
     }
 
     /**
+     * @param  \SimpleXMLElement $xml
      * @return Forecast[]
      */
     public static function getForecastsFromXml(\SimpleXMLElement $xml)
