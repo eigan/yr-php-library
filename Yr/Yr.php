@@ -113,7 +113,7 @@ class Yr
         // This is a critical process if we have no cache.
         // Please see Yr::getUrlResponseCode() for explanation
         if (!is_readable($xml_periodic_path) || !is_readable($xml_hourly_path)) {
-            $test = self::getServiceResponseCode($baseurl.$location);
+            $test = self::getServiceResponseCode($baseurl . $location);
 
             if ($test == self::SERVICE_LOCATION_INVALID) {
                 throw new \RuntimeException(
@@ -299,7 +299,7 @@ class Yr
      *
      * @param String  $url
      * @param String  $path
-     * @param numeric $cacheLife
+     * @param integer $cacheLife
      */
     private static function downloadData($url, $path, $cacheLife)
     {
@@ -342,7 +342,7 @@ class Yr
      *
      * @see getUrlResponseCode()
      *
-     * @param array $url the urls
+     * @param String $url the urls
      *
      * @return int the response
      */
