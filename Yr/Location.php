@@ -158,7 +158,9 @@ class Location
      */
     public function getCurrentForecast()
     {
-        return reset($this->forecasts_hourly);
+        $forecast = reset($this->forecasts_hourly);
+
+        return $forecast instanceof Forecast ? $forecast : null;
     }
 
     /**

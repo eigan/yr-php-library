@@ -68,7 +68,7 @@ class Yr
      * @param int    $cache_life life of the cache
      * @param String $language   language, norwegian or english
      *
-     * @return Yr\Location
+     * @return Location
      *
      * @throws \RuntimeException         if cache path is not writeable
      * @throws \RuntimeException         if the location is not correct
@@ -113,7 +113,7 @@ class Yr
         // This is a critical process if we have no cache.
         // Please see Yr::getUrlResponseCode() for explanation
         if (!is_readable($xml_periodic_path) || !is_readable($xml_hourly_path)) {
-            $test = self::getServiceResponseCode($baseurl . $location);
+            $test = self::getServiceResponseCode($baseurl.$location);
 
             if ($test == self::SERVICE_LOCATION_INVALID) {
                 throw new \RuntimeException(
@@ -204,7 +204,7 @@ class Yr
     /**
      * Converts xml to array and hide comments.
      *
-     * @param \SimpleXMLElement $data xml data
+     * @param object $data xml data
      *
      * @return array
      */
@@ -322,9 +322,6 @@ class Yr
     {
         switch ($language) {
             case "norwegian":
-                return self::API_URL."sted/";
-            break;
-
             case "newnorwegian":
             case "neonorwegian":
             case "nynorsk":
@@ -333,7 +330,6 @@ class Yr
 
             default:
                 return self::API_URL."place/";
-            break;
         }
     }
 
