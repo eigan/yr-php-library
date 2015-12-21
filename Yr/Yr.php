@@ -65,7 +65,7 @@ class Yr
      *
      * @param String $location   the location, like Norway/Vestfold/Sandefjord
      * @param String $cache_path where to store the cache
-     * @param int    $cache_life life of the cache
+     * @param int    $cache_life life of the cache in minutes
      * @param String $language   language, norwegian or english
      *
      * @return Location
@@ -97,7 +97,7 @@ class Yr
         $cache_path = realpath($cache_path).DIRECTORY_SEPARATOR;
 
         // Convert cache life to seconds
-        $cache_life * 60;
+        $cache_life_sec = $cache_life * 60;
 
         // Check if cache path is readable
         if (!is_writable($cache_path)) {
@@ -133,14 +133,14 @@ class Yr
         self::downloadData(
             "$baseurl/$location/forecast.xml",
             $xml_periodic_path,
-            $cache_life
+            $cache_life_sec
         );
 
         // Download the hourly xml if we don't have it
         self::downloadData(
             "$baseurl/$location/forecast_hour_by_hour.xml",
             $xml_hourly_path,
-            $cache_life
+            $cache_life_sec
         );
 
         $xml_hourly = new \SimpleXMLElement($xml_hourly_path, null, true);
