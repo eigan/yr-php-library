@@ -336,6 +336,10 @@ class Yr
             case "davvisámegiella":
                 return self::API_URL."sadji/";
                 break;
+            case "kven":
+            case "kväani":
+                return self::API_URL."paikka/";
+                break;
             default:
                 return self::API_URL."place/";
         }
