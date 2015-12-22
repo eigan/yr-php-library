@@ -331,6 +331,11 @@ class Yr
             case "nynorsk":
                 return self::API_URL."stad/";
                 break;
+            case "sami":
+            case "northernsami":
+            case "davvisámegiella":
+                return self::API_URL."sadji/";
+                break;
             default:
                 return self::API_URL."place/";
         }
