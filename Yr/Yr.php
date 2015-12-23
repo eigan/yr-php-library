@@ -323,11 +323,23 @@ class Yr
     {
         switch ($language) {
             case "norwegian":
-            case "newnorwegian":
-            case "neonorwegian":
-            case "nynorsk":
+            case "norsk":
+            case "bokmål":
                 return self::API_URL."sted/";
-
+                break;
+            case "newnorwegian":
+            case "nynorsk":
+                return self::API_URL."stad/";
+                break;
+            case "sami":
+            case "northernsami":
+            case "davvisámegiella":
+                return self::API_URL."sadji/";
+                break;
+            case "kven":
+            case "kväani":
+                return self::API_URL."paikka/";
+                break;
             default:
                 return self::API_URL."place/";
         }
