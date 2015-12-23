@@ -43,11 +43,11 @@ if (!is_dir($path_something)) {
     mkdir($path_something);
 }
 
-$max = 3281;
+$max = 3286;
 $counter = 0;
 
 // General icons
-$images = array("01d", "01m", "02d", "02m", "03d", "03m", "04", "05d", "05m", "06d", "06m", "07d", "07m", "08d", "08m", "09", "10", "11", "12", "13", "14", "15", "20d", "20m", "21d", "21m", "22", "23");
+$images = array("01d", "01m", "02d", "02m", "03d", "03m", "04", "05d", "05m", "06d", "06m", "07d", "07m", "08d", "08m", "09", "10", "11", "12", "13", "14", "15", "20d", "20m", "21d", "21m", "22", "23", "46", "47", "48", "49", "50");
 
 echo "Starting script. Will download $max icons, please wait..\n";
 
