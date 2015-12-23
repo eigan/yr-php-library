@@ -28,7 +28,8 @@ $path_something = $path_root.DIRECTORY_SEPARATOR."mf";
 // System command to use
 $downloader = "curl -O ";
 
-// How long to sleep between download (in sec)
+// How long to sleep between downloads (in microseconds)
+// 1 sec = 1000000 microseconds
 $sleep_time = 0;
 
 // Setup paths
@@ -42,28 +43,28 @@ if (!is_dir($path_something)) {
     mkdir($path_something);
 }
 
-// General icons
-$images = array("01d", "01n", "02d", "02n", "03d", "03n", "04", "05d", "05n", "06d", "06n", "07d", "07n", "08d", "08n", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20d", "20m", "20n", "21d", "21m", "21n", "22", "23");
-
-echo "Starting script. Will download over 1000 icons, please wait..\n";
-
-$max = 3172;
+$max = 3286;
 $counter = 0;
+
+// General icons
+$images = array("01d", "01m", "02d", "02m", "03d", "03m", "04", "05d", "05m", "06d", "06m", "07d", "07m", "08d", "08m", "09", "10", "11", "12", "13", "14", "15", "20d", "20m", "21d", "21m", "22", "23", "46", "47", "48", "49", "50");
+
+echo "Starting script. Will download $max icons, please wait..\n";
 
 // Downloads wind icons
 // Forecast::getWindIconKey()
 exec("cd $path_wind && ".$downloader."http://fil.nrk.no/yr/grafikk/vindpiler/32/vindstille.png > /dev/null 2>&1 &");
 setProgress(++$counter, "wind");
 
-for ($i = 0; $i <= 975; $i += 25) {
+for ($i = 0; $i <= 1000; $i += 25) {
     $num = str_pad($i, 4, "0", STR_PAD_LEFT);
 
-    for ($angle  = 5; $angle <= 355; $angle  += 5) {
+    for ($angle  = 0; $angle <= 355; $angle  += 5) {
         $angle = str_pad($angle, 3, "0", STR_PAD_LEFT);
         if (!file_exists($path_wind."/vindpil.$num.$angle.png")) {
             exec("cd $path_wind && ".$downloader."http://fil.nrk.no/yr/grafikk/vindpiler/32/vindpil.$num.$angle.png > /dev/null 2>&1 &");
         }
-        sleep($sleep_time);
+        usleep($sleep_time);
         setProgress(++$counter, "wind");
     }
 }
@@ -72,26 +73,26 @@ for ($i = 0; $i <= 975; $i += 25) {
 // Forecast::getSymbol("var")
 foreach ($images as $image) {
     exec("cd $path_general && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/$image.png > /dev/null 2>&1 &");
-    sleep($sleep_time);
+    usleep($sleep_time);
     setProgress(++$counter, "general");
 }
 
 // Download something. No time to ivestigate proper name for these now
 // Forecast::getSymbol("var")
-for ($i = 1; $i <= 99; $i++) {
+for ($i = 0; $i <= 99; $i++) {
     $num = str_pad($i, 2, "0", STR_PAD_LEFT);
     exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/03n.$num.png > /dev/null 2>&1 &");
-    sleep($sleep_time);
-    setProgress(++$counter, "something");
+    usleep($sleep_time);
+    setProgress(++$counter, "moon");
 
     $num = str_pad($i, 2, "0", STR_PAD_LEFT);
     exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/02n.$num.png > /dev/null 2>&1 &");
-    sleep($sleep_time);
-    setProgress(++$counter, "something");
+    usleep($sleep_time);
+    setProgress(++$counter, "moon");
 
     exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/01n.$num.png > /dev/null 2>&1 &");
-    sleep($sleep_time);
-    setProgress(++$counter, "something");
+    usleep($sleep_time);
+    setProgress(++$counter, "moon");
 }
 
 echo "\nDone! Downloaded $counter files\n";
