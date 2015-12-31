@@ -43,7 +43,7 @@ if (!is_dir($path_something)) {
     mkdir($path_something);
 }
 
-$max = 3286;
+$max = 3686;
 $counter = 0;
 
 // General icons
@@ -81,16 +81,31 @@ foreach ($images as $image) {
 // Forecast::getSymbol("var")
 for ($i = 0; $i <= 99; $i++) {
     $num = str_pad($i, 2, "0", STR_PAD_LEFT);
-    exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/03n.$num.png > /dev/null 2>&1 &");
+    exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/01n.$num.png > /dev/null 2>&1 &");
     usleep($sleep_time);
     setProgress(++$counter, "moon");
 
-    $num = str_pad($i, 2, "0", STR_PAD_LEFT);
     exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/02n.$num.png > /dev/null 2>&1 &");
     usleep($sleep_time);
     setProgress(++$counter, "moon");
 
-    exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/01n.$num.png > /dev/null 2>&1 &");
+    exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/03n.$num.png > /dev/null 2>&1 &");
+    usleep($sleep_time);
+    setProgress(++$counter, "moon");
+
+    exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/05n.$num.png > /dev/null 2>&1 &");
+    usleep($sleep_time);
+    setProgress(++$counter, "moon");
+
+    exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/06n.$num.png > /dev/null 2>&1 &");
+    usleep($sleep_time);
+    setProgress(++$counter, "moon");
+
+    exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/07n.$num.png > /dev/null 2>&1 &");
+    usleep($sleep_time);
+    setProgress(++$counter, "moon");
+
+    exec("cd $path_something && ".$downloader."http://symbol.yr.no/grafikk/sym/b100/mf/08n.$num.png > /dev/null 2>&1 &");
     usleep($sleep_time);
     setProgress(++$counter, "moon");
 }
