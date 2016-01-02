@@ -197,7 +197,7 @@ class Yr
             return $yr;
         } catch (\Exception $e) {
             // We fall back and send exception if something goes wrong
-            throw new \RuntimeException("Could not create Location object");
+            throw new \RuntimeException("Could not create Location object. Message: " . $e->getMessage());
         }
     }
 
