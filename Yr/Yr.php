@@ -330,7 +330,7 @@ class Yr
     private static function downloadData($url, $path, $cacheLife)
     {
         if (!is_readable($path) || ((time() - filemtime($path)) > $cacheLife)) {
-            $xml_content = fopen($url, 'r');
+            $xml_content = file_get_contents($url);
 
             if (!empty($xml_content)) {
                 // Only cache if there is content from request
