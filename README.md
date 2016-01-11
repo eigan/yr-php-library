@@ -4,6 +4,9 @@ Yr.no PHP library
 ==================
 PHP library for the norwegian wheather service yr.no. Currently in use on a fairly large norwegian site.
 
+### Status
+Please note that I am not adding more feature at this time (other than accepting pull requests). Consider using something like forecast.io which has lots more data.
+
 ### Requirements
 - PHP 5.3
 
